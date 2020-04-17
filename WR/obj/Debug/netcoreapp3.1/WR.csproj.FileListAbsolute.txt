@@ -1,0 +1,3 @@
+A:\Documents\Desktop\OpenGL\WR\bin\Debug\netcoreapp3.1\WR.exe
+A:\Documents\Desktop\OpenGL\WR\obj\Debug\netcoreapp3.1\WR.AssemblyInfoInputs.cache
+A:\Documents\Desktop\OpenGL\WR\obj\Debug\netcoreapp3.1\WR.AssemblyInfo.cs

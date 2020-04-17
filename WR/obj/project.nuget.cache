@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "dgSpecHash": "saAMzvyU8s1IS49BZ1TGtTbqd/WDhZ0HGFjyF/wcWDK2DsDhBKhTYMRN6FDmE4rUjPGa5Ucv/J+JUNtIyVgbeQ==",
+  "success": true,
+  "projectFilePath": "A:\\Documents\\Desktop\\OpenGL\\AginarEngine\\WR\\Aginar.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\fin\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\fin\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\fin\\.nuget\\packages\\opentk\\4.0.0-pre7\\opentk.4.0.0-pre7.nupkg.sha512",
+    "C:\\Users\\fin\\.nuget\\packages\\opentoolkit.core\\4.0.0-pre7\\opentoolkit.core.4.0.0-pre7.nupkg.sha512",
+    "C:\\Users\\fin\\.nuget\\packages\\opentoolkit.graphics\\4.0.0-pre7\\opentoolkit.graphics.4.0.0-pre7.nupkg.sha512",
+    "C:\\Users\\fin\\.nuget\\packages\\opentoolkit.input\\4.0.0-pre7\\opentoolkit.input.4.0.0-pre7.nupkg.sha512",
+    "C:\\Users\\fin\\.nuget\\packages\\opentoolkit.mathematics\\4.0.0-pre7\\opentoolkit.mathematics.4.0.0-pre7.nupkg.sha512",
+    "C:\\Users\\fin\\.nuget\\packages\\opentoolkit.redist.glfw\\3.3.0-pre20190419183326\\opentoolkit.redist.glfw.3.3.0-pre20190419183326.nupkg.sha512",
+    "C:\\Users\\fin\\.nuget\\packages\\opentoolkit.windowing.common\\4.0.0-pre7\\opentoolkit.windowing.common.4.0.0-pre7.nupkg.sha512",
+    "C:\\Users\\fin\\.nuget\\packages\\opentoolkit.windowing.desktop\\4.0.0-pre7\\opentoolkit.windowing.desktop.4.0.0-pre7.nupkg.sha512",
+    "C:\\Users\\fin\\.nuget\\packages\\opentoolkit.windowing.graphicslibraryframework\\4.0.0-pre7\\opentoolkit.windowing.graphicslibraryframework.4.0.0-pre7.nupkg.sha512",
+    "C:\\Users\\fin\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
