@@ -1,8 +1,6 @@
 ﻿using OpenToolkit.Graphics.OpenGL4;
 using OpenToolkit.Mathematics;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Aginar.Core
 {
@@ -18,10 +16,9 @@ namespace Aginar.Core
 
         public Mesh()
         {
-
             _vertexBufferObject = GL.GenBuffer();
             _elementBufferObject = GL.GenBuffer();
-            
+
             SetShader("Core/Shaders/default.vert", "Core/Shaders/default.frag");
             SetTexture("Core/Textures/default.png");
 
@@ -31,15 +28,13 @@ namespace Aginar.Core
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
 
-            var vertexLocation = _shader.GetAttribLocation("aPosition"); 
+            var vertexLocation = _shader.GetAttribLocation("aPosition");
             GL.EnableVertexAttribArray(vertexLocation);
             GL.VertexAttribPointer(vertexLocation, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
 
             var texCoordLocation = _shader.GetAttribLocation("aTexCoord");
             GL.EnableVertexAttribArray(texCoordLocation);
             GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
-
-            
         }
 
         public void SetTexture(string texturePath)
@@ -66,7 +61,6 @@ namespace Aginar.Core
             {
                 Console.WriteLine($"Shader initialisation failed!\n Vertex Path: \"{vertexPath}\" \n Fragment Path \"{fragmentPath}\"");
             }
-            
         }
 
         public void SetData(Vertex[] vertices, uint[] indices)
@@ -91,12 +85,11 @@ namespace Aginar.Core
 
         public void Draw()
         {
-            
             GL.BindVertexArray(_vertexArrayObject);
 
             _shader.Use();
             _texture.Use();
-            
+
             GL.DrawElements(PrimitiveType.Triangles, _triangleCount, DrawElementsType.UnsignedInt, 0);
         }
 
@@ -105,8 +98,7 @@ namespace Aginar.Core
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.BindVertexArray(0);
-            
-            
+
             GL.DeleteBuffer(_vertexBufferObject);
             GL.DeleteVertexArray(_vertexArrayObject);
             _shader.Dispose();

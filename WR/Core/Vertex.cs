@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 
 namespace Aginar.Core
 {
@@ -20,6 +16,5 @@ namespace Aginar.Core
             this.uvX = uvX;
             this.uvY = uvY;
         }
-
     }
 }

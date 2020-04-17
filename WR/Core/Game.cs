@@ -4,7 +4,6 @@ using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
 using OpenToolkit.Windowing.Desktop;
-using System;
 
 namespace Aginar.Core
 {
@@ -28,7 +27,6 @@ namespace Aginar.Core
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            
             if (!IsFocused)
                 return;
             if (KeyboardState.IsKeyDown(Key.Escape))
@@ -65,8 +63,8 @@ namespace Aginar.Core
                 _camera.Position -= _camera.Up * cameraSpeed * (float)e.Time; // Down
             }
 
-            float deltaX =  MousePosition.X - Bounds.HalfSize.X;
-            float deltaY = MousePosition.Y - Bounds.HalfSize.Y ;
+            float deltaX = MousePosition.X - Bounds.HalfSize.X;
+            float deltaY = MousePosition.Y - Bounds.HalfSize.Y;
             // Apply the camera pitch and yaw (we clamp the pitch in the camera class)
             _camera.Yaw += deltaX * sensitivity;
             _camera.Pitch -= deltaY * sensitivity; // reversed since y-coordinates range from bottom to top
@@ -77,29 +75,29 @@ namespace Aginar.Core
 
         protected override void OnLoad()
         {
-            IsFocused = true;
+            
             GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
             GL.Enable(EnableCap.DepthTest);
-            
+            GL.Enable(EnableCap.CullFace);
 
             _mesh = new Mesh();
             _mesh.SetData(
-                new Vertex[] 
+                new Vertex[]
                 {
                     new Vertex(-0.5f, -0.5f, 0.0f,  0.0f, 1.0f),
                     new Vertex(0.5f, -0.5f, 0.0f,  1.0f, 1.0f),
                     new Vertex(0.5f,  0.5f, 0.0f, 1.0f, 0.0f),
                     new Vertex(-0.5f,  0.5f, 0.0f,  0.0f, 0.0f),
-                }, 
-                new uint[] 
+                },
+                new uint[]
                 {
                     0, 1, 2,// clockwise order (tr, br, tl)
                     2, 3, 0
                 }
             );
 
-            _camera = new Camera(Vector3.UnitZ * 3, 800/600);
+            _camera = new Camera(Vector3.UnitZ * 3, 800 / 600);
             _mesh.UpdateProjection(_camera.GetProjectionMatrix());
             _mesh.UpdateView(_camera.GetViewMatrix());
             _mesh.UpdateModel(OpenToolkit.Mathematics.Matrix4.Identity);
@@ -120,7 +118,7 @@ namespace Aginar.Core
         {
             GL.Viewport(0, 0, e.Width, e.Height);
             if (_camera != null)
-            _camera.Fov = e.Width / (float)e.Height;
+                _camera.Fov = e.Width / (float)e.Height;
             base.OnResize(e);
         }
 

@@ -1,10 +1,9 @@
-﻿using System;
+﻿using OpenToolkit.Graphics.OpenGL4;
+using OpenToolkit.Mathematics;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Collections.Generic;
-using OpenToolkit;
-using OpenToolkit.Graphics.OpenGL4;
-using OpenToolkit.Mathematics;
 
 namespace Aginar.Core
 {

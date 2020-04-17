@@ -1,6 +1,5 @@
-﻿using System;
-using OpenToolkit;
-using OpenToolkit.Mathematics;
+﻿using OpenToolkit.Mathematics;
+using System;
 
 namespace Agniar.Core
 {
