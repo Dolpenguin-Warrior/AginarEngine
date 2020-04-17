@@ -1,4 +1,5 @@
 ﻿using OpenToolkit.Graphics.OpenGL4;
+using OpenToolkit.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -71,7 +72,7 @@ namespace Aginar.Core
         public void SetData(Vertex[] vertices, uint[] indices)
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * 5 * sizeof(float), vertices, BufferUsageHint.StaticDraw);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(uint), indices, BufferUsageHint.StaticDraw);
@@ -79,9 +80,18 @@ namespace Aginar.Core
             _triangleCount = indices.Length;
         }
 
-        
+        public void UpdateView(Matrix4 viewMatrix)
+            => _shader.SetMatrix4("view", viewMatrix);
+
+        public void UpdateProjection(Matrix4 projectionMatrix)
+            => _shader.SetMatrix4("projection", projectionMatrix);
+
+        public void UpdateModel(Matrix4 modelMatrix)
+            => _shader.SetMatrix4("model", modelMatrix);
+
         public void Draw()
         {
+            
             GL.BindVertexArray(_vertexArrayObject);
 
             _shader.Use();
