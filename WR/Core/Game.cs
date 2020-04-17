@@ -2,6 +2,7 @@
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
 using OpenToolkit.Windowing.Desktop;
+using System;
 
 namespace Aginar.Core
 {
@@ -20,7 +21,6 @@ namespace Aginar.Core
         {
             if (KeyboardState.IsKeyDown(Key.Escape))
             {
-                
                 Close();
             }
 
@@ -30,24 +30,24 @@ namespace Aginar.Core
         protected override void OnLoad()
         {
             GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-
+            
             _mesh = new Mesh();
             _mesh.SetData(
                 new Vertex[] 
                 {
-                    new Vertex(0.5f,  0.5f, 0.0f, 1.0f, 1.0f),
-                    new Vertex(0.5f, -0.5f, 0.0f, 1.0f, 0.0f),
-                    new Vertex(-0.5f, -0.5f, 0.0f, 0.0f, 0.0f),
-                    new Vertex(-0.5f,  0.5f, 0.0f, 0.0f, 1.0f),
+                    new Vertex(0.5f,  0.5f, 0.0f, 1.0f, 1.0f), // top right
+                    new Vertex(0.5f, -0.5f, 0.0f, 1.0f, 0.0f), // bottom right
+                    new Vertex(-0.5f, -0.5f, 0.0f, 0.0f, 0.0f), // bottom left
+                    new Vertex(-0.5f,  0.5f, 0.0f, 0.0f, 1.0f), // top left
                 }, 
                 new uint[] 
                 {
-                    0, 1, 3,
+                    0, 1, 3,// clockwise order (tr, br, tl)
                     1, 2, 3
                 }
+                
             
             );
-
             base.OnLoad();
         }
 
@@ -56,7 +56,6 @@ namespace Aginar.Core
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
             _mesh.Draw();
-
             SwapBuffers();
             base.OnRenderFrame(args);
         }
