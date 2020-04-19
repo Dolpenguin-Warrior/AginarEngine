@@ -7,7 +7,6 @@ namespace Aginar.Core
     {
         public float x, y, z;
         public float uvX, uvY;
-
         public Vertex(float x, float y, float z, float uvX, float uvY)
         {
             this.x = x;

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using OpenToolkit.Graphics.OpenGL4;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using OpenToolkit.Graphics.OpenGL4;
 using PixelFormat = OpenToolkit.Graphics.OpenGL4.PixelFormat;
 
 namespace Aginar.Core
@@ -67,7 +67,7 @@ namespace Aginar.Core
             // You could also use (amongst other options) Nearest, which just grabs the nearest pixel, which makes the texture look pixelated if scaled too far.
             // NOTE: The default settings for both of these are LinearMipmap. If you leave these as default but don't generate mipmaps,
             // your image will fail to render at all (usually resulting in pure black instead).
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
 
             // Now, set the wrapping mode. S is for the X axis, and T is for the Y axis.

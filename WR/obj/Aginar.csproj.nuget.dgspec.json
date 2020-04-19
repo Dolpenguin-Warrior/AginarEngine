@@ -42,13 +42,17 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "LiteNetLib": {
+              "target": "Package",
+              "version": "[0.9.1-beta, )"
+            },
             "OpenTK": {
               "target": "Package",
               "version": "[4.0.0-pre7, )"
             },
             "System.Drawing.Common": {
               "target": "Package",
-              "version": "[4.7.0, )"
+              "version": "[5.0.0-preview.2.20160.6, )"
             }
           },
           "imports": [

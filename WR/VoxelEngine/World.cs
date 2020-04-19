@@ -1,8 +1,6 @@
 ﻿using OpenToolkit.Mathematics;
-using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Aginar.VoxelEngine
 {
@@ -15,6 +13,33 @@ namespace Aginar.VoxelEngine
 
         public const int CHUNK_MASK = CHUNK_SIZE - 1; // The bitmask for replacing % 32 with magic bit operators
 
+        public Dictionary<Vector3i, Chunk> _chunks = new Dictionary<Vector3i, Chunk>();
+
+        public World()
+        {
+            _chunks.Add(new Vector3i(), new Chunk(this));
+            for (int z = 0; z < CHUNK_SIZE; z++)
+            {
+                for (int x = 0; x < CHUNK_SIZE; x++)
+                {
+                    float height = PerlinNoise.Fbm(x / 40.12412f, z / 40.12412f, 8) * 20 + 10;
+                    for (int y = 0; y < CHUNK_SIZE; y++)
+                    {
+                        int i = Vector3IntToIndex(x, y, z);
+                        _chunks[new Vector3i()][i] = ((y > height)? 0 :(y > height - 1)?1 :(y > height - 3)? 3 : 2);
+                    }
+                }
+            }
+        }
+
+        public int this[int x, int y, int z]
+        {
+            get
+            {
+                return 0;
+            }
+            set { }
+        }
 
         /// <summary>
         /// Takes the local position of a block in a chunk and returns the 1d index of that block (to be used in flat arrays)

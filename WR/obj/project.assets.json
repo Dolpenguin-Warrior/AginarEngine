@@ -2,7 +2,16 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "Microsoft.NETCore.Platforms/3.1.0": {
+      "LiteNetLib/0.9.1-beta": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp2.0/LiteNetLib.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/LiteNetLib.dll": {}
+        }
+      },
+      "Microsoft.NETCore.Platforms/5.0.0-preview.2.20160.6": {
         "type": "package",
         "compile": {
           "lib/netstandard1.0/_._": {}
@@ -11,10 +20,10 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.Win32.SystemEvents/4.7.0": {
+      "Microsoft.Win32.SystemEvents/5.0.0-preview.2.20160.6": {
         "type": "package",
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.0"
+          "Microsoft.NETCore.Platforms": "5.0.0-preview.2.20160.6"
         },
         "compile": {
           "ref/netstandard2.0/_._": {}
@@ -142,11 +151,11 @@
           "lib/netcoreapp3.0/OpenToolkit.Windowing.GraphicsLibraryFramework.dll": {}
         }
       },
-      "System.Drawing.Common/4.7.0": {
+      "System.Drawing.Common/5.0.0-preview.2.20160.6": {
         "type": "package",
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.0",
-          "Microsoft.Win32.SystemEvents": "4.7.0"
+          "Microsoft.NETCore.Platforms": "5.0.0-preview.2.20160.6",
+          "Microsoft.Win32.SystemEvents": "5.0.0-preview.2.20160.6"
         },
         "compile": {
           "ref/netcoreapp3.0/System.Drawing.Common.dll": {}
@@ -168,37 +177,61 @@
     }
   },
   "libraries": {
-    "Microsoft.NETCore.Platforms/3.1.0": {
-      "sha512": "z7aeg8oHln2CuNulfhiLYxCVMPEwBl3rzicjvIX+4sUuCwvXw5oXQEtbiU2c0z4qYL5L3Kmx0mMA/+t/SbY67w==",
+    "LiteNetLib/0.9.1-beta": {
+      "sha512": "DR/pMdqI/vQhQwjSIV2K8zVSHCRdu54AnWPzP/Xz9A6KGL5A2HrDvZvaqkx2Th0xpvWcicVL4FMaSGhxht6lHg==",
       "type": "package",
-      "path": "microsoft.netcore.platforms/3.1.0",
+      "path": "litenetlib/0.9.1-beta",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "lib/net35/LiteNetLib.dll",
+        "lib/net35/LiteNetLib.pdb",
+        "lib/net35/LiteNetLib.xml",
+        "lib/netcoreapp2.0/LiteNetLib.deps.json",
+        "lib/netcoreapp2.0/LiteNetLib.dll",
+        "lib/netcoreapp2.0/LiteNetLib.pdb",
+        "lib/netcoreapp2.0/LiteNetLib.xml",
+        "lib/netstandard2.0/LiteNetLib.deps.json",
+        "lib/netstandard2.0/LiteNetLib.dll",
+        "lib/netstandard2.0/LiteNetLib.pdb",
+        "lib/netstandard2.0/LiteNetLib.xml",
+        "litenetlib.0.9.1-beta.nupkg.sha512",
+        "litenetlib.nuspec"
+      ]
+    },
+    "Microsoft.NETCore.Platforms/5.0.0-preview.2.20160.6": {
+      "sha512": "S6k9S3afzVzH987kuSwRJPa+5HN1gvBoeUdrNFPFfjUypMUE3NRFod8Gz+cTW5MXWPTgtibnk7nVYOSX3Om6KA==",
+      "type": "package",
+      "path": "microsoft.netcore.platforms/5.0.0-preview.2.20160.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netstandard1.0/_._",
-        "microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+        "microsoft.netcore.platforms.5.0.0-preview.2.20160.6.nupkg.sha512",
         "microsoft.netcore.platforms.nuspec",
         "runtime.json",
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
     },
-    "Microsoft.Win32.SystemEvents/4.7.0": {
-      "sha512": "mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
+    "Microsoft.Win32.SystemEvents/5.0.0-preview.2.20160.6": {
+      "sha512": "ak+4cRwWo8j+3iaLKdXoR7dXUyVV0HFB9Ln3Ax+BdwhqmCvc/FoxWQwMzdTQGUBy/i/bdDrw6h5l9J6Nv8t0Pg==",
       "type": "package",
-      "path": "microsoft.win32.systemevents/4.7.0",
+      "path": "microsoft.win32.systemevents/5.0.0-preview.2.20160.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/net461/Microsoft.Win32.SystemEvents.dll",
         "lib/net461/Microsoft.Win32.SystemEvents.xml",
         "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll",
         "lib/netstandard2.0/Microsoft.Win32.SystemEvents.xml",
-        "microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+        "microsoft.win32.systemevents.5.0.0-preview.2.20160.6.nupkg.sha512",
         "microsoft.win32.systemevents.nuspec",
         "ref/net461/Microsoft.Win32.SystemEvents.dll",
         "ref/net461/Microsoft.Win32.SystemEvents.xml",
@@ -344,13 +377,14 @@
         "opentoolkit.windowing.graphicslibraryframework.nuspec"
       ]
     },
-    "System.Drawing.Common/4.7.0": {
-      "sha512": "v+XbyYHaZjDfn0ENmJEV1VYLgGgCTx1gnfOBcppowbpOAriglYgGCvFCPr2EEZyBvXlpxbEsTwkOlInl107ahA==",
+    "System.Drawing.Common/5.0.0-preview.2.20160.6": {
+      "sha512": "Q7jh7RzlsHX2CjcF2yYmd/j5zeDgeGk4mOlifEsu7UW9Vwklf5JuNcVSNi2g2+4viPI1Q3p4JpIsB0bsYNKcOg==",
       "type": "package",
-      "path": "system.drawing.common/4.7.0",
+      "path": "system.drawing.common/5.0.0-preview.2.20160.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/MonoAndroid10/_._",
@@ -377,7 +411,7 @@
         "runtimes/win/lib/netcoreapp2.0/System.Drawing.Common.dll",
         "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll",
         "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.xml",
-        "system.drawing.common.4.7.0.nupkg.sha512",
+        "system.drawing.common.5.0.0-preview.2.20160.6.nupkg.sha512",
         "system.drawing.common.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -386,8 +420,9 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "LiteNetLib >= 0.9.1-beta",
       "OpenTK >= 4.0.0-pre7",
-      "System.Drawing.Common >= 4.7.0"
+      "System.Drawing.Common >= 5.0.0-preview.2.20160.6"
     ]
   },
   "packageFolders": {
@@ -432,13 +467,17 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "LiteNetLib": {
+            "target": "Package",
+            "version": "[0.9.1-beta, )"
+          },
           "OpenTK": {
             "target": "Package",
             "version": "[4.0.0-pre7, )"
           },
           "System.Drawing.Common": {
             "target": "Package",
-            "version": "[4.7.0, )"
+            "version": "[5.0.0-preview.2.20160.6, )"
           }
         },
         "imports": [
