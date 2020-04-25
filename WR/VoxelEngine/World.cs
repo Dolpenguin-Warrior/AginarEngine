@@ -26,7 +26,7 @@ namespace Aginar.VoxelEngine
                     for (int y = 0; y < CHUNK_SIZE; y++)
                     {
                         int i = Vector3IntToIndex(x, y, z);
-                        _chunks[new Vector3i()][i] = ((y > height)? 0 :(y > height - 1)?1 :(y > height - 3)? 3 : 2);
+                        _chunks[new Vector3i()][i] = ((y > height) ? 0 : (y > height - 1) ? 1 : (y > height - 3) ? 3 : 2);
                     }
                 }
             }

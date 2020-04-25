@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "LiteNetLib/0.9.1-beta": {
+      "LiteNetLib/0.8.3.1": {
         "type": "package",
         "compile": {
           "lib/netcoreapp2.0/LiteNetLib.dll": {}
@@ -177,13 +177,14 @@
     }
   },
   "libraries": {
-    "LiteNetLib/0.9.1-beta": {
-      "sha512": "DR/pMdqI/vQhQwjSIV2K8zVSHCRdu54AnWPzP/Xz9A6KGL5A2HrDvZvaqkx2Th0xpvWcicVL4FMaSGhxht6lHg==",
+    "LiteNetLib/0.8.3.1": {
+      "sha512": "BicXYfayys6PsJiG96Re/PNPoExqL4FagBcYrVkOuTn7GavP4Z9sn4BTLKSe8vlv6lk8D79KHa12xKiY+T7yjQ==",
       "type": "package",
-      "path": "litenetlib/0.9.1-beta",
+      "path": "litenetlib/0.8.3.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "LICENSE.txt",
         "lib/net35/LiteNetLib.dll",
         "lib/net35/LiteNetLib.pdb",
         "lib/net35/LiteNetLib.xml",
@@ -195,7 +196,7 @@
         "lib/netstandard2.0/LiteNetLib.dll",
         "lib/netstandard2.0/LiteNetLib.pdb",
         "lib/netstandard2.0/LiteNetLib.xml",
-        "litenetlib.0.9.1-beta.nupkg.sha512",
+        "litenetlib.0.8.3.1.nupkg.sha512",
         "litenetlib.nuspec"
       ]
     },
@@ -420,7 +421,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "LiteNetLib >= 0.9.1-beta",
+      "LiteNetLib >= 0.8.3.1",
       "OpenTK >= 4.0.0-pre7",
       "System.Drawing.Common >= 5.0.0-preview.2.20160.6"
     ]
@@ -469,7 +470,7 @@
         "dependencies": {
           "LiteNetLib": {
             "target": "Package",
-            "version": "[0.9.1-beta, )"
+            "version": "[0.8.3.1, )"
           },
           "OpenTK": {
             "target": "Package",

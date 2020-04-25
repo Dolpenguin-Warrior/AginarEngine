@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Aginar.VoxelEngine
+﻿namespace Aginar.VoxelEngine
 {
     public class UVValues
     {
@@ -13,7 +9,5 @@ namespace Aginar.VoxelEngine
         public const float TexelWidth = 1 / (float)TextureWidth;
         public const float BlockUVHeight = BlockSize / (float)TextureHeight;
         public const float TexelHeight = 1 / (float)TextureHeight;
-
-        
     }
 }

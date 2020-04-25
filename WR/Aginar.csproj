@@ -4,10 +4,11 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>AnyCPU;x86</Platforms>
+    <StartupObject>Aginar.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LiteNetLib" Version="0.9.1-beta" />
+    <PackageReference Include="LiteNetLib" Version="0.8.3.1" />
     <PackageReference Include="OpenTK" Version="4.0.0-pre7" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0-preview.2.20160.6" />
   </ItemGroup>

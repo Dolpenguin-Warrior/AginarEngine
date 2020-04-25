@@ -133,36 +133,34 @@ namespace Aginar.VoxelEngine
 
         private static void AddQuad(Direction direction, Vertex[] verticies, uint[] indicies, ref int indexCount, ref int vertexCount, int _x, int _y, int _z, int blockType)
         {
-            
             switch (direction)
             {
-                
                 case Direction.North:
                     verticies[vertexCount + 0] = new Vertex(_x + 1f, _y + 1f, _z,
-                        0, 
+                        0,
                         (UVValues.BlockUVHeight * (blockType - 1))
                         ); // Top left
-                    verticies[vertexCount + 1] = new Vertex(_x + 1f, _y + 1f, _z + 1f, 
-                        UVValues.BlockUVWidth, 
+                    verticies[vertexCount + 1] = new Vertex(_x + 1f, _y + 1f, _z + 1f,
+                        UVValues.BlockUVWidth,
                         ((UVValues.BlockUVHeight) * (blockType - 1))
                         ); // Top right
-                    verticies[vertexCount + 2] = new Vertex(_x + 1f, _y, _z, 
-                        0, 
+                    verticies[vertexCount + 2] = new Vertex(_x + 1f, _y, _z,
+                        0,
                         (UVValues.BlockUVHeight * (blockType))
                         ); // bottom left
-                    verticies[vertexCount + 3] = new Vertex(_x + 1f, _y, _z + 1f, 
-                        UVValues.BlockUVWidth, 
-                        (UVValues.BlockUVHeight * (blockType)) 
+                    verticies[vertexCount + 3] = new Vertex(_x + 1f, _y, _z + 1f,
+                        UVValues.BlockUVWidth,
+                        (UVValues.BlockUVHeight * (blockType))
                         ); // bottom right
                     break;
 
                 case Direction.South:
-                    verticies[vertexCount + 0] = new Vertex(_x, _y + 1f, _z + 1f, 
-                        UVValues.BlockUVWidth * 1, 
+                    verticies[vertexCount + 0] = new Vertex(_x, _y + 1f, _z + 1f,
+                        UVValues.BlockUVWidth * 1,
                         UVValues.BlockUVHeight * (blockType - 1)
                         ); // Top left
-                    verticies[vertexCount + 1] = new Vertex(_x, _y + 1f, _z, 
-                        UVValues.BlockUVWidth * 2, 
+                    verticies[vertexCount + 1] = new Vertex(_x, _y + 1f, _z,
+                        UVValues.BlockUVWidth * 2,
                         UVValues.BlockUVHeight * (blockType - 1)
                         ); // Top right
                     verticies[vertexCount + 2] = new Vertex(_x, _y, _z + 1f,
@@ -180,7 +178,7 @@ namespace Aginar.VoxelEngine
                         ); // Top left
                     verticies[vertexCount + 1] = new Vertex(_x, _y + 1f, _z + 1f,
                         UVValues.BlockUVWidth * 3,
-                        UVValues.BlockUVHeight * (blockType - 1) 
+                        UVValues.BlockUVHeight * (blockType - 1)
                         ); // Top right
                     verticies[vertexCount + 2] = new Vertex(_x + 1f, _y, _z + 1f,
                         UVValues.BlockUVWidth * 2,
@@ -194,7 +192,7 @@ namespace Aginar.VoxelEngine
 
                 case Direction.West:
                     verticies[vertexCount + 0] = new Vertex(_x, _y + 1f, _z,
-                        UVValues.BlockUVWidth * 3, 
+                        UVValues.BlockUVWidth * 3,
                         UVValues.BlockUVHeight * (blockType - 1)); // Top left
                     verticies[vertexCount + 1] = new Vertex(_x + 1f, _y + 1f, _z,
                         UVValues.BlockUVWidth * 4,

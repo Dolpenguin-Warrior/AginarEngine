@@ -69,7 +69,7 @@ public static class PerlinNoise
         return Noise(coord.X, coord.Y, coord.Z);
     }
 
-    #endregion
+    #endregion Noise functions
 
     #region fBm functions
 
@@ -122,31 +122,31 @@ public static class PerlinNoise
         return Fbm(new Vector3(x, y, z), octave);
     }
 
-    #endregion
+    #endregion fBm functions
 
     #region Private functions
 
-    static float Fade(float t)
+    private static float Fade(float t)
     {
         return t * t * t * (t * (t * 6 - 15) + 10);
     }
 
-    static float Lerp(float t, float a, float b)
+    private static float Lerp(float t, float a, float b)
     {
         return a + t * (b - a);
     }
 
-    static float Grad(int hash, float x)
+    private static float Grad(int hash, float x)
     {
         return (hash & 1) == 0 ? x : -x;
     }
 
-    static float Grad(int hash, float x, float y)
+    private static float Grad(int hash, float x, float y)
     {
         return ((hash & 1) == 0 ? x : -x) + ((hash & 2) == 0 ? y : -y);
     }
 
-    static float Grad(int hash, float x, float y, float z)
+    private static float Grad(int hash, float x, float y, float z)
     {
         var h = hash & 15;
         var u = h < 8 ? x : y;
@@ -154,7 +154,7 @@ public static class PerlinNoise
         return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
     }
 
-    static int[] perm = {
+    private static int[] perm = {
         151,
         160,
         137,
@@ -414,5 +414,5 @@ public static class PerlinNoise
         151
     };
 
-    #endregion
+    #endregion Private functions
 }
