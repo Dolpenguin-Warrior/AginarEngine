@@ -69,3 +69,4 @@ A:\Documents\Desktop\OpenGL\AginarEngine\WR\obj\Debug\netcoreapp3.1\Aginar.pdb
 A:\Documents\Desktop\OpenGL\AginarEngine\WR\obj\Debug\netcoreapp3.1\Aginar.genruntimeconfig.cache
 A:\Documents\Desktop\OpenGL\AginarEngine\WR\bin\Debug\netcoreapp3.1\Core\Textures\tilemap.png
 A:\Documents\Desktop\OpenGL\AginarEngine\WR\obj\Debug\netcoreapp3.1\Aginar.csproj.CoreCompileInputs.cache
+A:\Documents\Desktop\OpenGL\AginarEngine\WR\bin\Debug\netcoreapp3.1\LiteNetLib.dll

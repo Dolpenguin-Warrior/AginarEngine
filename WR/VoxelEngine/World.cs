@@ -15,6 +15,8 @@ namespace Aginar.VoxelEngine
 
         public Dictionary<Vector3i, Chunk> _chunks = new Dictionary<Vector3i, Chunk>();
 
+        public static readonly BlockType[] blocks = new BlockType[] { new Air(), new Grass(), new Stone(), new Dirt(), new Lamp() };
+
         public World()
         {
             _chunks.Add(new Vector3i(), new Chunk(this));
@@ -22,21 +24,22 @@ namespace Aginar.VoxelEngine
             {
                 for (int x = 0; x < CHUNK_SIZE; x++)
                 {
-                    float height = PerlinNoise.Fbm(x / 40.12412f, z / 40.12412f, 8) * 20 + 10;
+                    float height = PerlinNoise.Fbm(x / 40.12412f, z / 40.12412f, 8) * 10 + 10;
                     for (int y = 0; y < CHUNK_SIZE; y++)
                     {
                         int i = Vector3IntToIndex(x, y, z);
-                        _chunks[new Vector3i()][i] = ((y > height) ? 0 : (y > height - 1) ? 1 : (y > height - 3) ? 3 : 2);
+                        _chunks[new Vector3i()][i] = ((y > height) ? 0 : (y > height - 1) ? 1 : (y > height - 3) ? 4 : 3);
                     }
                 }
             }
+
         }
 
-        public int this[int x, int y, int z]
+        public BlockType this[int x, int y, int z]
         {
             get
             {
-                return 0;
+                return blocks[0];
             }
             set { }
         }

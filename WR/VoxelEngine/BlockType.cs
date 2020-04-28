@@ -4,8 +4,10 @@ namespace Aginar.VoxelEngine
 {
     public abstract class BlockType
     {
-        public abstract string domain { get; }
-        public abstract Item[] itemDrop { get; }
-        public abstract Vector3 emitsLight { get; }
+        public abstract string Domain { get; }
+        public abstract Item[] Items { get; }
+        public abstract Vector3 Light { get; }
+        public abstract int Index { get; }
+        public abstract MeshType meshType { get; }
     }
 }

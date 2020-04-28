@@ -1,10 +1,11 @@
-﻿using OpenToolkit.Mathematics;
+﻿using Aginar.VoxelEngine.ChunkData;
+using OpenToolkit.Mathematics;
 
 namespace Aginar.VoxelEngine
 {
     public class Chunk
     {
-        private int[] blocks = new int[World.CHUNK_SIZE_CUBED];
+        private BlockStorage blocks = new BlockStorage(World.CHUNK_SIZE_CUBED);
 
         public readonly World World;
 
@@ -12,7 +13,7 @@ namespace Aginar.VoxelEngine
 
         public Vector3i position { get; private set; }
 
-        internal int[] GetBlocks() => blocks;
+        internal BlockStorage GetBlocks() => blocks;
 
         public void ResetChunk(Vector3i position)
         {
@@ -23,14 +24,13 @@ namespace Aginar.VoxelEngine
         {
             get
             {
-                if (index > -1 && index < World.CHUNK_SIZE_CUBED)
-                    return blocks[index];
-                return 0;
+                index = index & (World.CHUNK_SIZE_CUBED - 1);
+                return blocks.GetBlock(index);
             }
             set
             {
-                if (index > -1 && index < World.CHUNK_SIZE_CUBED)
-                    blocks[index] = value;
+                index = index & (World.CHUNK_SIZE_CUBED - 1);
+                blocks.SetBlock(index, value);
             }
         }
 
@@ -38,16 +38,13 @@ namespace Aginar.VoxelEngine
         {
             get
             {
-                int index = World.Vector3IntToIndex(x, y, z);
-                if (index > -1 && index < World.CHUNK_SIZE_CUBED)
-                    return blocks[index];
-                return 0;
+                int index = World.Vector3IntToIndex(x, y, z) & (World.CHUNK_SIZE_CUBED - 1);
+                return blocks.GetBlock(index);
             }
             set
             {
-                int index = World.Vector3IntToIndex(x, y, z);
-                if (index > -1 && index < World.CHUNK_SIZE_CUBED)
-                    blocks[index] = value;
+                int index = World.Vector3IntToIndex(x, y, z) & (World.CHUNK_SIZE_CUBED - 1);
+                blocks.SetBlock(index, value);
             }
         }
     }

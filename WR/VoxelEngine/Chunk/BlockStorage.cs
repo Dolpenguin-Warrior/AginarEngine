@@ -1,208 +1,174 @@
-﻿using System;
+﻿using OpenToolkit.Graphics.ES20;
+using OpenToolkit.Graphics.OpenGL;
+using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using System.Runtime.Intrinsics.X86;
 
 namespace Aginar.VoxelEngine.ChunkData
 {
     // https://www.reddit.com/r/VoxelGameDev/comments/9yu8qy/palettebased_compression_for_chunked_discrete/
+    // TODO: https://docs.microsoft.com/en-us/dotnet/api/system.runtime.intrinsics.x86.lzcnt.leadingzerocount?view=netcore-3.0
     public class BlockStorage
     {
-        private int size;
-        private BitArray data;
+        private readonly int _size;
+        private BitBuffer _data;
         private PaletteEntry[] palette;
         private int paletteCount;
         private int indicesLength;
 
         public BlockStorage(int size)
         {
-            this.size = size;
+            this._size = size;
             this.indicesLength = 1;
             this.paletteCount = 0;
             this.palette = new PaletteEntry[1 << indicesLength];
-            this.data = new BitArray(size * indicesLength); // the length is in bits, not bytes!
+            this._data = new BitBuffer(size * indicesLength);
+            palette[0] = new PaletteEntry(size, 0);
         }
 
-        public void setBlock(int index, BlockType type)
+        // Setting the wrong bit :eyesBlur:
+        public void SetBlock(int index, int blockType)
         {
-            BitVector32 pIndexVector = GetData(index);
-            int paletteIndex = pIndexVector.Data;
-
+            // Get the type of block at that position
+            int paletteIndex = (int)_data.GetBits(index * indicesLength, indicesLength).Data;
             PaletteEntry current = palette[paletteIndex];
 
-            // Whatever block is there will cease to exist in but a moment...
-
+            // That block at the position no longer exists, so one less reference of the block in the palette
             current.refcount -= 1;
 
-            // The following steps/choices *must* be ordered like they are.
-
-            // --- Is the block-type already in the palette?
-            int replace = SearchPalette(type);
+            // Is the block type already in the palette
+            int replace = -1;
+            for (int i = 0; i < palette.Length; i++)
+            {
+                if (palette[i] != null && palette[i].type == blockType)
+                {
+                    replace = i;
+                    break;
+                }
+            }
             if (replace != -1)
             {
-                // YES: Use the existing palette entry.
-                SetData(index, replace);
+                _data.SetBits(index * indicesLength, indicesLength, new BitArray32((uint)replace));
                 palette[replace].refcount += 1;
                 return;
             }
 
-            // --- Can we overwrite the current palette entry?
+            // Otherwise if we can overwrite the current palette entry
             if (current.refcount == 0)
             {
-                // YES, we can!
-                current.type = type;
+                current.type = blockType;
                 current.refcount = 1;
                 return;
             }
 
-            // --- A new palette entry is needed!
+            // A new palette entry is needed!
+            int newEntry = NewPaletteEntry();
 
-            // Get the first free palette entry, possibly growing the palette!
-            int newEntry = newPaletteEntry();
-
-            palette[newEntry] = new PaletteEntry(1, type);
-            SetData(index, newEntry);
+            palette[newEntry] = new PaletteEntry(1, blockType);
+            _data.SetBits(index * indicesLength, indicesLength, new BitArray32((uint)newEntry));
             paletteCount += 1;
         }
 
-        private int SearchPalette(BlockType type)
+        public int GetBlock(int index)
         {
-            int replace = -1;
+            int palettePos = (int)_data.GetBits(index * indicesLength, indicesLength).Data;
+            return palette[palettePos].type;
+            
+        }
+        
+        private int NewPaletteEntry()
+        {
+            int firstFree = -1;
+            // Get the first null or refCount = 0 entry
             for (int i = 0; i < palette.Length; i++)
             {
-                if (palette[i].type.GetType() == type.GetType())
+                if (palette[i] == null || palette[i].refcount == 0)
                 {
-                    replace = i;
+                    firstFree = i;
                     break;
                 }
             }
-
-            return replace;
-        }
-        private int SearchPalette(int refcount)
-        {
-            int replace = -1;
-            for (int i = 0; i < palette.Length; i++)
-            {
-                if (palette[i].refcount == refcount)
-                {
-                    replace = i;
-                    break;
-                }
-            }
-
-            return replace;
-        }
-
-        private BitVector32 GetData(int index)
-        {
-            BitVector32 pIndexVector = new BitVector32();
-            for (int i = 0; i < indicesLength; i++)
-            {
-                pIndexVector[i] = data[i + indicesLength * index];
-            }
-
-            return pIndexVector;
-        }
-
-        private void SetData(int index, int newEntry)
-        {
-            for (int i = 0; i < indicesLength; i++)
-            {
-                data[i + indicesLength * index] = ((newEntry >> i) & 1) == 1;
-            }
-        }
-
-        public BlockType getBlock(int index)
-        {
-            int paletteIndex = GetData(index).Data;
-            return palette[paletteIndex].type;
-        }
-
-        private int newPaletteEntry()
-        {
-            int firstFree = SearchPalette(0);
 
             if (firstFree != -1)
-            {
                 return firstFree;
-            }
 
-            // No free entry?
-            // Grow the palette, and thus the BitBuffer
-            growPalette();
+            GrowPalette();
 
-            // Just try again now!
-            return newPaletteEntry();
+            return NewPaletteEntry();
         }
 
-        private void growPalette()
+        private void GrowPalette()
         {
-            // decode the indices
-            int[] indices = new int[size];
-            for (int i = 0; i < indices.Length; i++)
+            // Decode the indices
+            int[] indices = new int[_size];
+            for (int i = 0; i < _size; i++)
             {
-                indices[i] = GetData(i).Data;
+                indices[i] = (int)_data.GetBits(i * indicesLength, indicesLength).Data;
             }
 
-            // Create new palette, doubling it in size
+            // Create a new palette, double the size
             indicesLength = indicesLength << 1;
-            PaletteEntry[] newPalette = new PaletteEntry[1 << indicesLength];
-            palette.CopyTo(newPalette, 0);
-            palette = newPalette;
 
-            // Allocate new BitBuffer
-            data = new BitArray(size * indicesLength); // the length is in bits, not bytes!
-
-            // Encode the indices
-            for (int i = 0; i < indices.Length; i++)
-            {
-                SetData(i*indicesLength, indices[i]);
-            }
-        }
-
-        // Shrink the palette (and thus the BitBuffer) every now and then.
-        // You may need to apply heuristics to determine when to do this.
-        public void FitPalette()
-        {
-            // Remove old entries...
+            PaletteEntry[] newPalette = new PaletteEntry[(int)MathF.Pow(2, indicesLength)];
+            int k = 0;
             for (int i = 0; i < palette.Length; i++)
             {
-                if (palette[i].refcount == 0)
+                if (palette[i] != null && palette[i].refcount > 0)
+                {
+                    newPalette[k++] = palette[i];
+                }
+            }
+            palette = newPalette;
+
+            _data = new BitBuffer(_size * indicesLength);
+
+            for (int i = 0; i < indices.Length; i++)
+            {
+                _data.SetBits(i * indicesLength, indicesLength, new BitArray32((uint)indices[i]));
+                
+            }
+        }
+
+        // Shrink the palette because it may be too big (old entries removed)
+        private void FitPalette()
+        {
+            for (int i = 0; i < palette.Length; i++)
+            {
+                // Remove old entries
+                if (palette[i] != null && palette[i].refcount == 0)
                 {
                     palette[i] = null;
                     paletteCount -= 1;
                 }
             }
 
-            // Is the palette less than half of its closest power-of-two?
+
             if (paletteCount > PowerOfTwo(paletteCount) / 2)
             {
-                // NO: The palette cannot be shrunk!
+                // Cannot shrink palette
                 return;
             }
-            
-            // decode all indices
-            int[] indices = new int[size];
-            for (int i = 0; i < indices.Length; i++)
+
+            int[] indices = new int[_size];
+            for (int i = 0; i < _size; i++)
             {
-                indices[i] = GetData(i * indicesLength).Data;
+                indices[i] = (int)_data.GetBits(i * indicesLength, indicesLength).Data;
             }
 
-            // Create new palette, halfing it in size
             indicesLength = indicesLength >> 1;
-            PaletteEntry[] newPalette = new PaletteEntry[1 << indicesLength];
+            PaletteEntry[] newPalette = new PaletteEntry[(int)MathF.Pow(2, indicesLength)];
 
-            // We gotta compress the palette entries!
             int paletteCounter = 0;
             for (int pi = 0; pi < palette.Length; pi++, paletteCounter++)
             {
                 PaletteEntry entry = newPalette[paletteCounter] = palette[pi];
 
-                // Re-encode the indices (find and replace; with limit)
-                for (int di = 0, fc = 0; di < indices.Length && fc < entry.refcount; di++)
+                for (int di = 0, fc = 0; di < indicesLength && fc < entry.refcount; di++)
                 {
                     if (pi == indices[di])
                     {
@@ -212,13 +178,13 @@ namespace Aginar.VoxelEngine.ChunkData
                 }
             }
 
-            // Allocate new BitBuffer
-            data = new BitArray(size * indicesLength); // the length is in bits, not bytes!
+            // allocate a new bitbuffer
+            _data = new BitBuffer(_size * indicesLength);
 
-            // Encode the indices
+            // Reencode indices
             for (int i = 0; i < indices.Length; i++)
             {
-                SetData(i * indicesLength, indices[i]);
+                _data.SetBits(i * indicesLength, indicesLength, new BitArray32((uint)indices[i]));
             }
         }
 
@@ -240,7 +206,6 @@ namespace Aginar.VoxelEngine.ChunkData
             }
 
             return 1 << count;
-            // TODO: https://docs.microsoft.com/en-us/dotnet/api/system.runtime.intrinsics.x86.lzcnt.leadingzerocount?view=netcore-3.0
         }
     }
 }

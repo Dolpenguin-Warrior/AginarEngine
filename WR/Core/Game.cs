@@ -45,7 +45,7 @@ namespace Aginar.Core
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
             }
 #endif
-            const float cameraSpeed = 1.5f;
+            const float cameraSpeed = 4f;
             const float sensitivity = 0.2f;
 
             if (KeyboardState.IsKeyDown(Key.W))

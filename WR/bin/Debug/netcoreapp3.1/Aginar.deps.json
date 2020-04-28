@@ -8,11 +8,20 @@
     ".NETCoreApp,Version=v3.1": {
       "Aginar/1.0.0": {
         "dependencies": {
+          "LiteNetLib": "0.8.3.1",
           "OpenTK": "4.0.0-pre7",
           "System.Drawing.Common": "5.0.0-preview.2.20160.6"
         },
         "runtime": {
           "Aginar.dll": {}
+        }
+      },
+      "LiteNetLib/0.8.3.1": {
+        "runtime": {
+          "lib/netcoreapp2.0/LiteNetLib.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Microsoft.NETCore.Platforms/5.0.0-preview.2.20160.6": {},
@@ -172,6 +181,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "LiteNetLib/0.8.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BicXYfayys6PsJiG96Re/PNPoExqL4FagBcYrVkOuTn7GavP4Z9sn4BTLKSe8vlv6lk8D79KHa12xKiY+T7yjQ==",
+      "path": "litenetlib/0.8.3.1",
+      "hashPath": "litenetlib.0.8.3.1.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/5.0.0-preview.2.20160.6": {
       "type": "package",
