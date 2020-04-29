@@ -3,11 +3,11 @@ namespace Aginar.VoxelEngine
 {
     internal struct uint3
     {
-        public int x;
-        public int y;
-        public int z;
+        public uint x;
+        public uint y;
+        public uint z;
 
-        public uint3(int v1, int v2, int v3)
+        public uint3(uint v1, uint v2, uint v3)
         {
             this.x = v1;
             this.y = v2;
