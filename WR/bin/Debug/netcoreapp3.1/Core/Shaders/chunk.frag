@@ -10,4 +10,8 @@ uniform sampler2D texture0;
 void main()
 {
     outputColor = texture(texture0, texCoord) * lighting;
+    if (outputColor.w == 0)
+    {
+        discard;
+    }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
-using Aginar.VoxelEngine.ChunkData.Mesh;
 using OpenToolkit.Graphics.OpenGL4;
 using OpenToolkit.Mathematics;
 
@@ -34,7 +33,7 @@ namespace Aginar.Core
 
             int vertexLocation = _shader.GetAttribLocation("aPosition");
             GL.EnableVertexAttribArray(vertexLocation);
-            GL.VertexAttribPointer(vertexLocation, 2, VertexAttribPointerType.UnsignedInt, false, 0, 0);
+            GL.VertexAttribIPointer(vertexLocation, 2, VertexAttribIntegerType.UnsignedInt, 0, IntPtr.Zero);
         }
 
         public void SetTexture(string texturePath)
@@ -66,7 +65,7 @@ namespace Aginar.Core
         public void SetData(ChunkVertex[] vertices, uint[] indices)
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * 2 * sizeof(int), vertices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * 2 * sizeof(uint), vertices, BufferUsageHint.StaticDraw);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(uint), indices, BufferUsageHint.StaticDraw);
