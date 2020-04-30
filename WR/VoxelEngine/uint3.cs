@@ -1,6 +1,9 @@
 ﻿//#if DEBUG
+using System.Runtime.InteropServices;
+
 namespace Aginar.VoxelEngine
 {
+    [StructLayout(LayoutKind.Sequential)]
     internal struct uint3
     {
         public uint x;

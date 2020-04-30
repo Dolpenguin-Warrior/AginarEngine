@@ -3,7 +3,7 @@
 out vec4 outputColor;
 
 in vec2 texCoord;
-flat in ivec4 lighting;
+flat in vec4 lighting;
 
 uniform sampler2D texture0;
 

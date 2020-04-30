@@ -16,43 +16,43 @@ namespace Aginar.VoxelEngine
 
     public class ChunkMeshGenerator
     {
-            private static readonly uint3[] Face_Data = new uint3[]
-            {
-            // North
-                    new uint3(1, 0, 1),
-                    new uint3(1, 1, 1),
-                    new uint3(1, 1, 0),
-                    new uint3(1, 0, 0),
-            // South
-                    new uint3(0, 0, 1),
-                    new uint3(0, 1, 1),
-                    new uint3(0, 1, 0),
-                    new uint3(0, 0, 0),
+        private static readonly uint3[] Face_Data = new uint3[]
+        {
+        // North
+                new uint3(1, 0, 1),
+                new uint3(1, 1, 1),
+                new uint3(1, 1, 0),
+                new uint3(1, 0, 0),
+        // South
+                new uint3(0, 0, 1),
+                new uint3(0, 1, 1),
+                new uint3(0, 1, 0),
+                new uint3(0, 0, 0),
 
-            // East
-                    new uint3(1, 0, 1),
-                    new uint3(1, 1, 1),
-                    new uint3(0, 1, 1),
-                    new uint3(0, 0, 1),
+        // East
+                new uint3(1, 0, 1),
+                new uint3(1, 1, 1),
+                new uint3(0, 1, 1),
+                new uint3(0, 0, 1),
 
-            // West
-                    new uint3(1, 0, 0),
-                    new uint3(1, 1, 0),
-                    new uint3(0, 1, 0),
-                    new uint3(0, 0, 0),
+        // West
+                new uint3(1, 0, 0),
+                new uint3(1, 1, 0),
+                new uint3(0, 1, 0),
+                new uint3(0, 0, 0),
 
-            // Top
-                    new uint3(0, 1, 0),
-                    new uint3(0, 1, 1),
-                    new uint3(1, 1, 1),
-                    new uint3(1, 1, 0),
+        // Top
+                new uint3(0, 1, 0),
+                new uint3(0, 1, 1),
+                new uint3(1, 1, 1),
+                new uint3(1, 1, 0),
 
-            // Bottom
-                    new uint3(1, 0, 0),
-                    new uint3(1, 0, 1),
-                    new uint3(0, 0, 1),
-                    new uint3(0, 0, 0)
-            };
+        // Bottom
+                new uint3(1, 0, 0),
+                new uint3(1, 0, 1),
+                new uint3(0, 0, 1),
+                new uint3(0, 0, 0)
+        };
 
         public static ArrayPool<ChunkVertex> vertexPool = new ArrayPool<ChunkVertex>(4, World.CHUNK_SIZE_CUBED * 6 * 4);
         public static ArrayPool<uint> indexPool = new ArrayPool<uint>(4, World.CHUNK_SIZE_CUBED * 6 * 6);
@@ -89,11 +89,11 @@ namespace Aginar.VoxelEngine
 #if _DEBUG_CHUNKS
                 Stopwatch generationTimer = Stopwatch.StartNew();
 #endif // _DEBUG_CHUNKS
-                int x, y, z = 0;
+                uint x, y, z = 0;
                 int current = 0;
-                for (int i = 0; i < World.CHUNK_SIZE_CUBED; i++)
+                for (uint i = 0; i < World.CHUNK_SIZE_CUBED; i++)
                 {
-                    current = blocks.GetBlock(i);
+                    current = blocks.GetBlock((int)i);
                     
                     if (current != 0)
                     {
@@ -101,30 +101,26 @@ namespace Aginar.VoxelEngine
                         y = (i >> World.LOG_CHUNK_SIZE) & World.CHUNK_MASK;
                         z = (i >> (World.LOG_CHUNK_SIZE * 2)) & World.CHUNK_MASK;
 
-                    
-                        if (x == World.CHUNK_MASK || blocks.GetBlock(i + 1) == 0)
+                        //x == World.CHUNK_MASK || blocks.GetBlock(i + 1) == 0
+                        if (y < 1 && x < 1 && z < 1)
                         {
-                            vertices[vertexCount + 0].BlockType = (uint)current | (2 << 16) | (0 << 19);
-                            vertices[vertexCount + 0].BlockData =(uint)
+                            vertices[vertexCount + 0].BlockType = (uint)current | (2u << 16) | (0u << 19) | (0u << 23) ;
+                            vertices[vertexCount + 0].BlockData =
                                 ((Face_Data[0].x + x) | ((Face_Data[0].y + y) << 6) | ((Face_Data[0].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)) // Lighting
-                                ;
+                                );
 
-                            vertices[vertexCount + 1].BlockType = (uint)current | (2 << 16) | (0 << 19);
-                            vertices[vertexCount + 1].BlockData = (uint)
+                            vertices[vertexCount + 1].BlockType = (uint)current | (2u << 16) | (0u << 19) | (1u << 23);
+                            vertices[vertexCount + 1].BlockData = 
                                 ((Face_Data[1].x + x) | ((Face_Data[1].y + y) << 6) | ((Face_Data[1].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)) // Lighting
-                                ;
-                            vertices[vertexCount + 2].BlockType = (uint)current | (2 << 16) | (0 << 19);
-                            vertices[vertexCount + 2].BlockData = (uint)
+                                );
+                            vertices[vertexCount + 2].BlockType = (uint)current | (2u << 16) | (0u << 19) | (2u << 23);
+                            vertices[vertexCount + 2].BlockData = 
                                 ((Face_Data[2].x + x) | ((Face_Data[2].y + y) << 6) | ((Face_Data[2].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)) // Lighting
-                                ;
-                            vertices[vertexCount + 3].BlockType = (uint)current | (2 << 16) | (0 << 19);
-                            vertices[vertexCount + 3].BlockData = (uint)
+                                );
+                            vertices[vertexCount + 3].BlockType = (uint)current | (2u << 16) | (0u << 19) | (3u << 23);
+                            vertices[vertexCount + 3].BlockData = 
                                 ((Face_Data[3].x + x) | ((Face_Data[3].y + y) << 6) | ((Face_Data[3].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)) // Lighting
-                                ;
+                                );
 
                             indices[indexCount++] = (uint)vertexCount + 3;
                             indices[indexCount++] = (uint)vertexCount + 2;
@@ -136,76 +132,76 @@ namespace Aginar.VoxelEngine
                             vertexCount += 4;
                         }
                     
-                        if (x == 0 || blocks.GetBlock(i - 1) == 0)
-                        {
+                        //if (x == 0 || blocks.GetBlock(i - 1) == 0)
+                        //{
                             
 
-                            indices[indexCount++] = (uint)vertexCount + 0;
-                            indices[indexCount++] = (uint)vertexCount + 2;
-                            indices[indexCount++] = (uint)vertexCount + 3;
+                        //    indices[indexCount++] = (uint)vertexCount + 0;
+                        //    indices[indexCount++] = (uint)vertexCount + 2;
+                        //    indices[indexCount++] = (uint)vertexCount + 3;
 
-                            indices[indexCount++] = (uint)vertexCount + 0;
-                            indices[indexCount++] = (uint)vertexCount + 1;
-                            indices[indexCount++] = (uint)vertexCount + 2;
-                            vertexCount += 4;
-                        }
+                        //    indices[indexCount++] = (uint)vertexCount + 0;
+                        //    indices[indexCount++] = (uint)vertexCount + 1;
+                        //    indices[indexCount++] = (uint)vertexCount + 2;
+                        //    vertexCount += 4;
+                        //}
 
-                        if (z == World.CHUNK_MASK || blocks.GetBlock(i + World.CHUNK_SIZE_SQUARE) == 0)
-                        {
+                        //if (z == World.CHUNK_MASK || blocks.GetBlock(i + World.CHUNK_SIZE_SQUARE) == 0)
+                        //{
                             
 
 
 
-                            indices[indexCount++] = (uint)vertexCount + 0;
-                            indices[indexCount++] = (uint)vertexCount + 2;
-                            indices[indexCount++] = (uint)vertexCount + 3;
+                        //    indices[indexCount++] = (uint)vertexCount + 0;
+                        //    indices[indexCount++] = (uint)vertexCount + 2;
+                        //    indices[indexCount++] = (uint)vertexCount + 3;
 
-                            indices[indexCount++] = (uint)vertexCount + 0;
-                            indices[indexCount++] = (uint)vertexCount + 1;
-                            indices[indexCount++] = (uint)vertexCount + 2;
-                            vertexCount += 4;
-                        }
+                        //    indices[indexCount++] = (uint)vertexCount + 0;
+                        //    indices[indexCount++] = (uint)vertexCount + 1;
+                        //    indices[indexCount++] = (uint)vertexCount + 2;
+                        //    vertexCount += 4;
+                        //}
 
-                        if (z == 0 || blocks.GetBlock(i - World.CHUNK_SIZE_SQUARE) == 0)
-                        {
+                        //if (z == 0 || blocks.GetBlock(i - World.CHUNK_SIZE_SQUARE) == 0)
+                        //{
                             
 
-                            indices[indexCount++] = (uint)vertexCount + 3;
-                            indices[indexCount++] = (uint)vertexCount + 2;
-                            indices[indexCount++] = (uint)vertexCount + 0;
+                        //    indices[indexCount++] = (uint)vertexCount + 3;
+                        //    indices[indexCount++] = (uint)vertexCount + 2;
+                        //    indices[indexCount++] = (uint)vertexCount + 0;
 
-                            indices[indexCount++] = (uint)vertexCount + 2;
-                            indices[indexCount++] = (uint)vertexCount + 1;
-                            indices[indexCount++] = (uint)vertexCount + 0;
-                            vertexCount += 4;
-                        }
+                        //    indices[indexCount++] = (uint)vertexCount + 2;
+                        //    indices[indexCount++] = (uint)vertexCount + 1;
+                        //    indices[indexCount++] = (uint)vertexCount + 0;
+                        //    vertexCount += 4;
+                        //}
 
-                        if (y == World.CHUNK_MASK || blocks.GetBlock(i + World.CHUNK_SIZE) == 0)
-                        {
+                        //if (y == World.CHUNK_MASK || blocks.GetBlock(i + World.CHUNK_SIZE) == 0)
+                        //{
                            
 
-                            indices[indexCount++] = (uint)vertexCount + 0;
-                            indices[indexCount++] = (uint)vertexCount + 2;
-                            indices[indexCount++] = (uint)vertexCount + 3;
+                        //    indices[indexCount++] = (uint)vertexCount + 0;
+                        //    indices[indexCount++] = (uint)vertexCount + 2;
+                        //    indices[indexCount++] = (uint)vertexCount + 3;
 
-                            indices[indexCount++] = (uint)vertexCount + 0;
-                            indices[indexCount++] = (uint)vertexCount + 1;
-                            indices[indexCount++] = (uint)vertexCount + 2;
-                            vertexCount += 4;
-                        }
-                        if (y == 0 || blocks.GetBlock(i - World.CHUNK_SIZE) == 0)
-                        {
+                        //    indices[indexCount++] = (uint)vertexCount + 0;
+                        //    indices[indexCount++] = (uint)vertexCount + 1;
+                        //    indices[indexCount++] = (uint)vertexCount + 2;
+                        //    vertexCount += 4;
+                        //}
+                        //if (y == 0 || blocks.GetBlock(i - World.CHUNK_SIZE) == 0)
+                        //{
                             
 
-                            indices[indexCount++] = (uint)vertexCount + 0;
-                            indices[indexCount++] = (uint)vertexCount + 2;
-                            indices[indexCount++] = (uint)vertexCount + 3;
+                        //    indices[indexCount++] = (uint)vertexCount + 0;
+                        //    indices[indexCount++] = (uint)vertexCount + 2;
+                        //    indices[indexCount++] = (uint)vertexCount + 3;
 
-                            indices[indexCount++] = (uint)vertexCount + 0;
-                            indices[indexCount++] = (uint)vertexCount + 1;
-                            indices[indexCount++] = (uint)vertexCount + 2;
-                            vertexCount += 4;
-                        }
+                        //    indices[indexCount++] = (uint)vertexCount + 0;
+                        //    indices[indexCount++] = (uint)vertexCount + 1;
+                        //    indices[indexCount++] = (uint)vertexCount + 2;
+                        //    vertexCount += 4;
+                        //}
 
                     }
                 }

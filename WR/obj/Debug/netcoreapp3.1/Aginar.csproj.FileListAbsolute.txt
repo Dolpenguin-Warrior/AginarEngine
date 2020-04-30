@@ -109,3 +109,5 @@ C:\Users\fin\Desktop\2020UnityGames\AginarEngine\WR\obj\Debug\netcoreapp3.1\Agin
 C:\Users\fin\Desktop\2020UnityGames\AginarEngine\WR\obj\Debug\netcoreapp3.1\Aginar.genruntimeconfig.cache
 C:\Users\fin\Desktop\2020UnityGames\AginarEngine\WR\bin\Debug\netcoreapp3.1\Core\Shaders\chunk.frag
 C:\Users\fin\Desktop\2020UnityGames\AginarEngine\WR\bin\Debug\netcoreapp3.1\Core\Shaders\chunk.vert
+A:\Documents\Desktop\OpenGL\AginarEngine\WR\bin\Debug\netcoreapp3.1\Core\Shaders\chunk.frag
+A:\Documents\Desktop\OpenGL\AginarEngine\WR\bin\Debug\netcoreapp3.1\Core\Shaders\chunk.vert

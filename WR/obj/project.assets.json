@@ -427,17 +427,21 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\fin\\.nuget\\packages\\": {}
+    "C:\\Users\\fin\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\fin\\Desktop\\2020UnityGames\\AginarEngine\\WR\\Aginar.csproj",
+      "projectUniqueName": "A:\\Documents\\Desktop\\OpenGL\\AginarEngine\\WR\\Aginar.csproj",
       "projectName": "Aginar",
-      "projectPath": "C:\\Users\\fin\\Desktop\\2020UnityGames\\AginarEngine\\WR\\Aginar.csproj",
+      "projectPath": "A:\\Documents\\Desktop\\OpenGL\\AginarEngine\\WR\\Aginar.csproj",
       "packagesPath": "C:\\Users\\fin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\fin\\Desktop\\2020UnityGames\\AginarEngine\\WR\\obj\\",
+      "outputPath": "A:\\Documents\\Desktop\\OpenGL\\AginarEngine\\WR\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "C:\\Users\\fin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -447,7 +451,8 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://packages.xenko.com/nuget": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
