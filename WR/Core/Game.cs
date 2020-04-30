@@ -10,7 +10,7 @@ namespace Aginar.Core
 
     public class Game : GameWindow
     {
-        private Mesh _mesh;
+        private ChunkMesh _mesh;
         private Camera _camera;
         private World _world;
 
@@ -91,7 +91,7 @@ namespace Aginar.Core
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
             
-            _mesh = new Mesh();
+            _mesh = new ChunkMesh();
 
             _camera = new Camera(Vector3.UnitZ * 3, (float)Size.X / Size.Y);
             
