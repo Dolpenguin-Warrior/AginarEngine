@@ -16,29 +16,38 @@ vec2 texCoords[4] = vec2[4](
     vec2(0.0f, 0.875f)
 );
 
+const uint yShift = 6u;
+const uint zShift = 12u;
 
+const uint rLightShift = 18u;
+const uint gLightShift = 22u;
+const uint bLightShift = 26u;
+
+const uint rotationShift = 19u;
+const uint normalShift = 16u;
+const uint uvShift = 23u;
 
 void main(void)
 {
     vec4 position;
 
     position.x = aPosition.x & 0x3Fu;
-    position.y = ((aPosition.x & 0xFC0u) >> 6u);
-    position.z = ((aPosition.x & 0x3F000u) >> 12u);
+    position.y = ((aPosition.x & 0xFC0u) >> yShift);
+    position.z = ((aPosition.x & 0x3F000u) >> zShift);
     position.w = 1;
 
-    lighting = vec4((aPosition.x >> 18u) & 15u, (aPosition.x >> 22u) & 15u, (aPosition.x >> 26u) & 15u, 1);
+    lighting = vec4((aPosition.x >> rLightShift) & 15u, (aPosition.x >> gLightShift) & 15u, (aPosition.x >> bLightShift) & 15u, 1);
 
     uint blockType = aPosition.y  & 0xFFFFu;
 
-    uint rotation = (aPosition.y >> 19u) & 15u;
+    uint rotation = (aPosition.y >> rotationShift) & 15u;
 
-    uint normal  = (aPosition.y & 0x70000u) >> 16u;
+    uint normal  = (aPosition.y & 0x70000u) >> normalShift;
 
-    uint verta = (aPosition.y & 0x1800000u) >> 23u;
+    uint UV = (aPosition.y & 0x1800000u) >> uvShift;
     
 
-    texCoord = texCoords[verta] + vec2(0.125f * normal, 0.125f * (blockType-1u));
+    texCoord = texCoords[UV] + vec2(0.125f * normal, 0.125f * (blockType));
 
     gl_Position = position * model * view * projection;
 }

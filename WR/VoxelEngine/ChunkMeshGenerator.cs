@@ -10,6 +10,7 @@ namespace Aginar.VoxelEngine
     using ChunkData;
     using Core;
     using Core.Generic;
+    using OpenToolkit.Mathematics;
     using System.Globalization;
     using System.Net;
 
@@ -100,29 +101,32 @@ namespace Aginar.VoxelEngine
                         y = (uint)(i >> World.LOG_CHUNK_SIZE) & World.CHUNK_MASK;
                         z = (uint)(i >> (World.LOG_CHUNK_SIZE * 2)) & World.CHUNK_MASK;
 
+                        Vector3i lights = chunk.lights.GetLight(i);
                         //
                         if (x == World.CHUNK_MASK || blocks.GetBlock(i + 1) == 0)
                         {
+                            // BlockType (16 bits), Normal (3 bits), Rotation (4 bits), UV ()
                             vertices[vertexCount + 0].BlockType = (uint)current | (0u << 16) | (0u << 19) | (0u << 23);
                             vertices[vertexCount + 0].BlockData =
                                 ((Face_Data[0].x + x) | ((Face_Data[0].y + y) << 6) | ((Face_Data[0].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
+                            
 
                             vertices[vertexCount + 1].BlockType = (uint)current | (0u << 16) | (0u << 19) | (3u << 23);
                             vertices[vertexCount + 1].BlockData = 
                                 ((Face_Data[1].x + x) | ((Face_Data[1].y + y) << 6) | ((Face_Data[1].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
                             vertices[vertexCount + 2].BlockType = (uint)current | (0u << 16) | (0u << 19) | (2u << 23);
                             vertices[vertexCount + 2].BlockData = 
                                 ((Face_Data[2].x + x) | ((Face_Data[2].y + y) << 6) | ((Face_Data[2].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
                             vertices[vertexCount + 3].BlockType = (uint)current | (0u << 16) | (0u << 19) | (1u << 23);
                             vertices[vertexCount + 3].BlockData = 
                                 ((Face_Data[3].x + x) | ((Face_Data[3].y + y) << 6) | ((Face_Data[3].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
 
                             indices[indexCount++] = (uint)vertexCount + 3;
@@ -140,23 +144,23 @@ namespace Aginar.VoxelEngine
                             vertices[vertexCount + 0].BlockType = (uint)current | (1u << 16) | (0u << 19) | (1u << 23);
                             vertices[vertexCount + 0].BlockData =
                                 ((Face_Data[4].x + x) | ((Face_Data[4].y + y) << 6) | ((Face_Data[4].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
 
                             vertices[vertexCount + 1].BlockType = (uint)current | (1u << 16) | (0u << 19) | (2u << 23);
                             vertices[vertexCount + 1].BlockData =
                                 ((Face_Data[5].x + x) | ((Face_Data[5].y + y) << 6) | ((Face_Data[5].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
                             vertices[vertexCount + 2].BlockType = (uint)current | (1u << 16) | (0u << 19) | (3u << 23);
                             vertices[vertexCount + 2].BlockData =
                                 ((Face_Data[6].x + x) | ((Face_Data[6].y + y) << 6) | ((Face_Data[6].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
                             vertices[vertexCount + 3].BlockType = (uint)current | (1u << 16) | (0u << 19) | (0u << 23);
                             vertices[vertexCount + 3].BlockData =
                                 ((Face_Data[7].x + x) | ((Face_Data[7].y + y) << 6) | ((Face_Data[7].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
 
                             indices[indexCount++] = (uint)vertexCount + 0;
@@ -174,23 +178,23 @@ namespace Aginar.VoxelEngine
                             vertices[vertexCount + 0].BlockType = (uint)current | (2u << 16) | (0u << 19) | (1u << 23);
                             vertices[vertexCount + 0].BlockData =
                                 ((Face_Data[8].x + x) | ((Face_Data[8].y + y) << 6) | ((Face_Data[8].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
 
                             vertices[vertexCount + 1].BlockType = (uint)current | (2u << 16) | (0u << 19) | (2u << 23);
                             vertices[vertexCount + 1].BlockData =
                                 ((Face_Data[9].x + x) | ((Face_Data[9].y + y) << 6) | ((Face_Data[9].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
                             vertices[vertexCount + 2].BlockType = (uint)current | (2u << 16) | (0u << 19) | (3u << 23);
                             vertices[vertexCount + 2].BlockData =
                                 ((Face_Data[10].x + x) | ((Face_Data[10].y + y) << 6) | ((Face_Data[10].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
                             vertices[vertexCount + 3].BlockType = (uint)current | (2u << 16) | (0u << 19) | (0u << 23);
                             vertices[vertexCount + 3].BlockData =
                                 ((Face_Data[11].x + x) | ((Face_Data[11].y + y) << 6) | ((Face_Data[11].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
 
 
@@ -210,23 +214,23 @@ namespace Aginar.VoxelEngine
                             vertices[vertexCount + 0].BlockType = (uint)current | (3u << 16) | (0u << 19) | (0u << 23);
                             vertices[vertexCount + 0].BlockData =
                                 ((Face_Data[12].x + x) | ((Face_Data[12].y + y) << 6) | ((Face_Data[12].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
 
                             vertices[vertexCount + 1].BlockType = (uint)current | (3u << 16) | (0u << 19) | (3u << 23);
                             vertices[vertexCount + 1].BlockData =
                                 ((Face_Data[13].x + x) | ((Face_Data[13].y + y) << 6) | ((Face_Data[13].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
                             vertices[vertexCount + 2].BlockType = (uint)current | (3u << 16) | (0u << 19) | (2u << 23);
                             vertices[vertexCount + 2].BlockData =
                                 ((Face_Data[14].x + x) | ((Face_Data[14].y + y) << 6) | ((Face_Data[14].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
                             vertices[vertexCount + 3].BlockType = (uint)current | (3u << 16) | (0u << 19) | (1u << 23);
                             vertices[vertexCount + 3].BlockData =
                                 ((Face_Data[15].x + x) | ((Face_Data[15].y + y) << 6) | ((Face_Data[15].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
 
                             indices[indexCount++] = (uint)vertexCount + 3;
@@ -244,23 +248,23 @@ namespace Aginar.VoxelEngine
                             vertices[vertexCount + 0].BlockType = (uint)current | (4u << 16) | (0u << 19) | (0u << 23);
                             vertices[vertexCount + 0].BlockData =
                                 ((Face_Data[16].x + x) | ((Face_Data[16].y + y) << 6) | ((Face_Data[16].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
 
                             vertices[vertexCount + 1].BlockType = (uint)current | (4u << 16) | (0u << 19) | (1u << 23);
                             vertices[vertexCount + 1].BlockData =
                                 ((Face_Data[17].x + x) | ((Face_Data[17].y + y) << 6) | ((Face_Data[17].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
                             vertices[vertexCount + 2].BlockType = (uint)current | (4u << 16) | (0u << 19) | (2u << 23);
                             vertices[vertexCount + 2].BlockData =
                                 ((Face_Data[18].x + x) | ((Face_Data[18].y + y) << 6) | ((Face_Data[18].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
                             vertices[vertexCount + 3].BlockType = (uint)current | (4u << 16) | (0u << 19) | (3u << 23);
                             vertices[vertexCount + 3].BlockData =
                                 ((Face_Data[19].x + x) | ((Face_Data[19].y + y) << 6) | ((Face_Data[19].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
 
                             indices[indexCount++] = (uint)vertexCount + 0;
@@ -278,23 +282,23 @@ namespace Aginar.VoxelEngine
                             vertices[vertexCount + 0].BlockType = (uint)current | (5u << 16) | (0u << 19) | (0u << 23);
                             vertices[vertexCount + 0].BlockData =
                                 ((Face_Data[20].x + x) | ((Face_Data[20].y + y) << 6) | ((Face_Data[20].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
 
                             vertices[vertexCount + 1].BlockType = (uint)current | (5u << 16) | (0u << 19) | (1u << 23);
                             vertices[vertexCount + 1].BlockData =
                                 ((Face_Data[21].x + x) | ((Face_Data[21].y + y) << 6) | ((Face_Data[21].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
                             vertices[vertexCount + 2].BlockType = (uint)current | (5u << 16) | (0u << 19) | (2u << 23);
                             vertices[vertexCount + 2].BlockData =
                                 ((Face_Data[22].x + x) | ((Face_Data[22].y + y) << 6) | ((Face_Data[22].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
                             vertices[vertexCount + 3].BlockType = (uint)current | (5u << 16) | (0u << 19) | (3u << 23);
                             vertices[vertexCount + 3].BlockData =
                                 ((Face_Data[23].x + x) | ((Face_Data[23].y + y) << 6) | ((Face_Data[23].z + z) << 12) // Position
-                                | (1 << 18) | (1 << 22) | (1 << 26)
+                                | ((uint)lights.X << 18) | ((uint)lights.Y << 22) | ((uint)lights.Z << 26)
                                 );
 
                             indices[indexCount++] = (uint)vertexCount + 0;

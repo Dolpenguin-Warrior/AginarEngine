@@ -1,4 +1,5 @@
 ﻿using OpenToolkit.Mathematics;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
@@ -15,7 +16,7 @@ namespace Aginar.VoxelEngine
 
         public Dictionary<Vector3i, Chunk> _chunks = new Dictionary<Vector3i, Chunk>();
 
-        public static readonly BlockType[] blocks = new BlockType[] { new Air(), new Grass(), new Stone(), new Dirt(), new Lamp() };
+        public static readonly BlockType[] blocks = new BlockType[] { new Air(), new Grass(), new Stone(), new Dirt(), new Lamp(), new PurpleLamp() };
 
         public World()
         {
@@ -25,13 +26,21 @@ namespace Aginar.VoxelEngine
                 for (int x = 0; x < CHUNK_SIZE; x++)
                 {
                     float height = PerlinNoise.Fbm(x / 40.12412f, z / 40.12412f, 8) * 10 + 10;
+                    bool lamp = Math.Abs(PerlinNoise.Noise(x, z)) > 0.5f;
                     for (int y = 0; y < CHUNK_SIZE; y++)
                     {
                         int i = Vector3IntToIndex(x, y, z);
-                        _chunks[new Vector3i()][i] = ((y > height) ? 0 : (y > height - 1) ? 1 : (y > height - 3) ? 4 : 3);
+                        _chunks[new Vector3i()][i] = ((y > height) ? 0 : (y > height - 1) ? 1 : (y > height - 3) ? 3 : 2);
+
                     }
                 }
             }
+
+             _chunks[new Vector3i()][1, 12, 5] = 4;
+             _chunks[new Vector3i()][10, 12, 30] = 4;
+             //_chunks[new Vector3i()][4, 12, 0] = 5;
+             //_chunks[new Vector3i()][8, 12, 4] = 5;
+
 
         }
 
@@ -50,7 +59,7 @@ namespace Aginar.VoxelEngine
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Vector3IntToIndex(int localX, int localY, int localZ)
         {
-            return (localZ << 10) | (localY << 5) | localX;
+            return (localZ << (2* LOG_CHUNK_SIZE)) | (localY << LOG_CHUNK_SIZE) | localX;
         }
 
         /// <summary>
@@ -59,7 +68,7 @@ namespace Aginar.VoxelEngine
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Vector3IntToIndex(Vector3i localPos)
         {
-            return (localPos.Z << 10) | (localPos.Y << 5) | localPos.X;
+            return (localPos.Z << (2 * LOG_CHUNK_SIZE)) | (localPos.Y << LOG_CHUNK_SIZE) | localPos.X;
         }
 
         /// <summary>
@@ -68,7 +77,7 @@ namespace Aginar.VoxelEngine
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3i IndexToLocalPos(int index)
         {
-            return new Vector3i(index & (CHUNK_SIZE - 1), (index >> LOG_CHUNK_SIZE) & (CHUNK_SIZE - 1), index >> (2 * LOG_CHUNK_SIZE));
+            return new Vector3i(index & (CHUNK_MASK), (index >> LOG_CHUNK_SIZE) & CHUNK_MASK, index >> (2 * LOG_CHUNK_SIZE));
         }
     }
 }

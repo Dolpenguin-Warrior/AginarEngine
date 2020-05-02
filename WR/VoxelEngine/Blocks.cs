@@ -63,7 +63,18 @@ namespace Aginar.VoxelEngine
     {
         public override Item[] Items => new Item[] { Item.LampBlock };
 
-        public override Vector3 Light => new Vector3(1, 1, 1);
+        public override Vector3 Light => new Vector3(12, 12, 12);
+
+        public override string Domain => $"Base{TypeDescriptor.GetClassName(this.GetType())}";
+
+        public override int Index => 4;
+        public override MeshType meshType => MeshType.Cube;
+    }
+    public class PurpleLamp : BlockType
+    {
+        public override Item[] Items => new Item[] { Item.LampBlock };
+
+        public override Vector3 Light => new Vector3(8, 2, 12);
 
         public override string Domain => $"Base{TypeDescriptor.GetClassName(this.GetType())}";
 
