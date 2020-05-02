@@ -45,26 +45,25 @@ namespace Aginar.VoxelEngine.Lighting
                                 chunk.lights.SetLight(index - (1 << shift), SetRedLight(ref light, GetRedLight(lightLevel) - 1u));
                             }
 
-                            if (GetBlueLight(light) + 2u <= GetBlueLight(lightLevel))
-                            {
-                                chunk.lights.SetLight(index - (1 << shift), SetBlueLight(ref light, GetBlueLight(lightLevel) - 1u));
-                                enqueue = true;
-                            }
+                            //if (GetBlueLight(light) + 2u <= GetBlueLight(lightLevel))
+                            //{
+                            //    chunk.lights.SetLight(index - (1 << shift), SetBlueLight(ref light, GetBlueLight(lightLevel) - 1u));
+                            //    enqueue = true;
+                            //}
 
-                            if (GetGreenLight(light) + 2u <= GetGreenLight(lightLevel))
-                            {
-                                enqueue = true;
-                                chunk.lights.SetLight(index - (1 << shift), SetGreenLight(ref light, GetGreenLight(lightLevel) - 1u));
-                            }
+                            //if (GetGreenLight(light) + 2u <= GetGreenLight(lightLevel))
+                            //{
+                            //    enqueue = true;
+                            //    chunk.lights.SetLight(index - (1 << shift), SetGreenLight(ref light, GetGreenLight(lightLevel) - 1u));
+                            //}
 
 
-                            if (enqueue)
-                                if (chunk[index - (1 << shift)] == 0)
-                                    lightNodes.Enqueue(new LightNode()
-                                    {
-                                        chunk = chunk,
-                                        index = index - (1 << shift)
-                                    });
+                            if (enqueue && chunk[index - (1 << shift)] == 0)
+                                lightNodes.Enqueue(new LightNode()
+                                {
+                                    chunk = chunk,
+                                    index = index - (1 << shift)
+                                });
                         }
                         if (((index >> shift) & World.CHUNK_MASK) != World.CHUNK_MASK)
                         {
@@ -77,26 +76,25 @@ namespace Aginar.VoxelEngine.Lighting
                                 chunk.lights.SetLight(index + (1 << shift), SetRedLight(ref light, GetRedLight(lightLevel) - 1u));
                             }
 
-                            if (GetBlueLight(light) + 2u <= GetBlueLight(lightLevel))
-                            {
-                                chunk.lights.SetLight(index + (1 << shift), SetBlueLight(ref light, GetBlueLight(lightLevel) - 1u));
-                                enqueue = true;
-                            }
+                            //if (GetBlueLight(light) + 2u <= GetBlueLight(lightLevel))
+                            //{
+                            //    chunk.lights.SetLight(index + (1 << shift), SetBlueLight(ref light, GetBlueLight(lightLevel) - 1u));
+                            //    enqueue = true;
+                            //}
 
-                            if (GetGreenLight(light) + 2u <= GetGreenLight(lightLevel))
-                            {
-                                enqueue = true;
-                                chunk.lights.SetLight(index + (1 << shift), SetGreenLight(ref light, GetGreenLight(lightLevel) - 1u));
-                            }
+                            //if (GetGreenLight(light) + 2u <= GetGreenLight(lightLevel))
+                            //{
+                            //    enqueue = true;
+                            //    chunk.lights.SetLight(index + (1 << shift), SetGreenLight(ref light, GetGreenLight(lightLevel) - 1u));
+                            //}
 
 
-                            if (enqueue)
-                                if (chunk[index + (1 << shift)] == 0)
-                                    lightNodes.Enqueue(new LightNode()
-                                    {
-                                        chunk = chunk,
-                                        index = index + (1 << shift)
-                                    });
+                            if (enqueue && chunk[index + (1 << shift)] == 0)
+                                lightNodes.Enqueue(new LightNode()
+                                {
+                                    chunk = chunk,
+                                    index = index + (1 << shift)
+                                });
                         }
                         shift += World.LOG_CHUNK_SIZE;
                     }
@@ -325,17 +323,16 @@ namespace Aginar.VoxelEngine.Lighting
         private static uint GetRedLight(int light)
             => (uint)light & 0xFu;
         private static uint SetRedLight(ref int light, uint value)
-            =>  ((uint)light | (value));
-
-        private static uint GetBlueLight(int light)
-            => ((uint)light >> 8) & 0xFu;
-        private static uint SetBlueLight(ref int light, uint value)
-             => (uint)(light = (int)((uint)light | (value << 8)));
-
+            => (uint)(light = (int)((uint)light | (value)));
 
         private static uint GetGreenLight(int light)
             => ((uint)light >> 4) & 0xFu;
         private static uint SetGreenLight(ref int light, uint value)
             => (uint)(light =(int)((uint)light | (value << 4)));
+
+        private static uint GetBlueLight(int light)
+            => ((uint)light >> 8) & 0xFu;
+        private static uint SetBlueLight(ref int light, uint value)
+             => (uint)(light = (int)((uint)light | (value << 8)));
     }
 }
