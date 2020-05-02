@@ -31,203 +31,77 @@ namespace Aginar.VoxelEngine.Lighting
 
                 if (lightLevel > 0)
                 {
-                    if ((index & World.CHUNK_MASK) != 0)
+                    int shift = 0;
+                    for (int i = 0; i < 3; i++)
                     {
-                        int light = chunk.lights.GetLightInt(index - 1);
-                        bool enqueue = false;
-
-                        if (GetRedLight(light) + 2u <= GetRedLight(lightLevel))
+                        if (((index >> shift) & World.CHUNK_MASK) != 0)
                         {
-                            enqueue = true;
-                            chunk.lights.SetLight(index - 1, SetRedLight(ref light, GetRedLight(lightLevel) - 1u));
+                            int light = chunk.lights.GetLightInt(index - (1 << shift));
+                            bool enqueue = false;
+
+                            if (GetRedLight(light) + 2u <= GetRedLight(lightLevel))
+                            {
+                                enqueue = true;
+                                chunk.lights.SetLight(index - (1 << shift), SetRedLight(ref light, GetRedLight(lightLevel) - 1u));
+                            }
+
+                            if (GetBlueLight(light) + 2u <= GetBlueLight(lightLevel))
+                            {
+                                chunk.lights.SetLight(index - (1 << shift), SetBlueLight(ref light, GetBlueLight(lightLevel) - 1u));
+                                enqueue = true;
+                            }
+
+                            if (GetGreenLight(light) + 2u <= GetGreenLight(lightLevel))
+                            {
+                                enqueue = true;
+                                chunk.lights.SetLight(index - (1 << shift), SetGreenLight(ref light, GetGreenLight(lightLevel) - 1u));
+                            }
+
+
+                            if (enqueue)
+                                if (chunk[index - (1 << shift)] == 0)
+                                    lightNodes.Enqueue(new LightNode()
+                                    {
+                                        chunk = chunk,
+                                        index = index - (1 << shift)
+                                    });
                         }
-                            
-                        if (GetBlueLight(light) + 2u <= GetBlueLight(lightLevel))
+                        if (((index >> shift) & World.CHUNK_MASK) != World.CHUNK_MASK)
                         {
-                            chunk.lights.SetLight(index - 1, SetBlueLight(ref light, GetBlueLight(lightLevel) - 1u));
-                            enqueue = true;
+                            int light = chunk.lights.GetLightInt(index + (1 << shift));
+                            bool enqueue = false;
+
+                            if (GetRedLight(light) + 2u <= GetRedLight(lightLevel))
+                            {
+                                enqueue = true;
+                                chunk.lights.SetLight(index + (1 << shift), SetRedLight(ref light, GetRedLight(lightLevel) - 1u));
+                            }
+
+                            if (GetBlueLight(light) + 2u <= GetBlueLight(lightLevel))
+                            {
+                                chunk.lights.SetLight(index + (1 << shift), SetBlueLight(ref light, GetBlueLight(lightLevel) - 1u));
+                                enqueue = true;
+                            }
+
+                            if (GetGreenLight(light) + 2u <= GetGreenLight(lightLevel))
+                            {
+                                enqueue = true;
+                                chunk.lights.SetLight(index + (1 << shift), SetGreenLight(ref light, GetGreenLight(lightLevel) - 1u));
+                            }
+
+
+                            if (enqueue)
+                                if (chunk[index + (1 << shift)] == 0)
+                                    lightNodes.Enqueue(new LightNode()
+                                    {
+                                        chunk = chunk,
+                                        index = index + (1 << shift)
+                                    });
                         }
-                            
-                        if (GetGreenLight(light) + 2u <= GetGreenLight(lightLevel))
-                        {
-                            enqueue = true;
-                            chunk.lights.SetLight(index - 1, SetGreenLight(ref light, GetGreenLight(lightLevel) - 1u));
-                        }
-                            
-
-                        if (enqueue)
-                            if (chunk[index - 1] == 0)
-                                lightNodes.Enqueue(new LightNode()
-                                {
-                                    chunk = chunk,
-                                    index = index - 1
-                                });
-
-                    }
-                    if ((index & World.CHUNK_MASK) != World.CHUNK_MASK)
-                    {
-                        int light = chunk.lights.GetLightInt(index + 1);
-                        bool enqueue = false;
-
-                        if (GetRedLight(light) + 2u <= GetRedLight(lightLevel))
-                        {
-                            enqueue = true;
-                            chunk.lights.SetLight(index + 1, SetRedLight(ref light, GetRedLight(lightLevel) - 1u));
-                        }
-
-                        if (GetBlueLight(light) + 2u <= GetBlueLight(lightLevel))
-                        {
-                            chunk.lights.SetLight(index + 1, SetBlueLight(ref light, GetBlueLight(lightLevel) - 1u));
-                            enqueue = true;
-                        }
-
-                        if (GetGreenLight(light) + 2u <= GetGreenLight(lightLevel))
-                        {
-                            enqueue = true;
-                            chunk.lights.SetLight(index + 1, SetGreenLight(ref light, GetGreenLight(lightLevel) - 1u));
-                        }
-
-
-                        if (enqueue)
-                            if (chunk[index + 1] == 0)
-                                lightNodes.Enqueue(new LightNode()
-                                {
-                                    chunk = chunk,
-                                    index = index + 1
-                                });
-                    }
-
-                    if (((index >> World.LOG_CHUNK_SIZE) & World.CHUNK_MASK) != 0)
-                    {
-                        int light = chunk.lights.GetLightInt(index - World.CHUNK_SIZE);
-                        bool enqueue = false;
-
-                        if (GetRedLight(light) + 2u <= GetRedLight(lightLevel))
-                        {
-                            enqueue = true;
-                            chunk.lights.SetLight(index - World.CHUNK_SIZE, SetRedLight(ref light, GetRedLight(lightLevel) - 1u));
-                        }
-
-                        if (GetBlueLight(light) + 2u <= GetBlueLight(lightLevel))
-                        {
-                            chunk.lights.SetLight(index - World.CHUNK_SIZE, SetBlueLight(ref light, GetBlueLight(lightLevel) - 1u));
-                            enqueue = true;
-                        }
-
-                        if (GetGreenLight(light) + 2u <= GetGreenLight(lightLevel))
-                        {
-                            enqueue = true;
-                            chunk.lights.SetLight(index - World.CHUNK_SIZE, SetGreenLight(ref light, GetGreenLight(lightLevel) - 1u));
-                        }
-
-
-                        if (enqueue)
-                            if (chunk[index - World.CHUNK_SIZE] == 0)
-                                lightNodes.Enqueue(new LightNode()
-                                {
-                                    chunk = chunk,
-                                    index = index - World.CHUNK_SIZE
-                                });
-                    }
-                    if (((index >> World.LOG_CHUNK_SIZE) & World.CHUNK_MASK) != World.CHUNK_MASK)
-                    {
-                        int light = chunk.lights.GetLightInt(index + World.CHUNK_SIZE);
-                        bool enqueue = false;
-
-                        if (GetRedLight(light) + 2u <= GetRedLight(lightLevel))
-                        {
-                            enqueue = true;
-                            chunk.lights.SetLight(index + World.CHUNK_SIZE, SetRedLight(ref light, GetRedLight(lightLevel) - 1u));
-                        }
-
-                        if (GetBlueLight(light) + 2u <= GetBlueLight(lightLevel))
-                        {
-                            chunk.lights.SetLight(index + World.CHUNK_SIZE, SetBlueLight(ref light, GetBlueLight(lightLevel) - 1u));
-                            enqueue = true;
-                        }
-
-                        if (GetGreenLight(light) + 2u <= GetGreenLight(lightLevel))
-                        {
-                            enqueue = true;
-                            chunk.lights.SetLight(index + World.CHUNK_SIZE, SetGreenLight(ref light, GetGreenLight(lightLevel) - 1u));
-                        }
-
-
-                        if (enqueue)
-                            if (chunk[index + World.CHUNK_SIZE] == 0)
-                                lightNodes.Enqueue(new LightNode()
-                                {
-                                    chunk = chunk,
-                                    index = index + World.CHUNK_SIZE
-                                });
+                        shift += World.LOG_CHUNK_SIZE;
                     }
 
-                    if (((index >> (World.LOG_CHUNK_SIZE * 2)) & World.CHUNK_MASK) != 0)
-                    {
-
-                        int light = chunk.lights.GetLightInt(index - World.CHUNK_SIZE_SQUARE);
-                        bool enqueue = false;
-
-                        if (GetRedLight(light) + 2u <= GetRedLight(lightLevel))
-                        {
-                            enqueue = true;
-                            chunk.lights.SetLight(index - World.CHUNK_SIZE_SQUARE, SetRedLight(ref light, GetRedLight(lightLevel) - 1u));
-                        }
-
-                        if (GetBlueLight(light) + 2u <= GetBlueLight(lightLevel))
-                        {
-                            chunk.lights.SetLight(index - World.CHUNK_SIZE_SQUARE, SetBlueLight(ref light, GetBlueLight(lightLevel) - 1u));
-                            enqueue = true;
-                        }
-
-                        if (GetGreenLight(light) + 2u <= GetGreenLight(lightLevel))
-                        {
-                            enqueue = true;
-                            chunk.lights.SetLight(index - World.CHUNK_SIZE_SQUARE, SetGreenLight(ref light, GetGreenLight(lightLevel) - 1u));
-                        }
-
-
-                        if (enqueue)
-                            if (chunk[index - World.CHUNK_SIZE_SQUARE] == 0)
-                                lightNodes.Enqueue(new LightNode()
-                                {
-                                    chunk = chunk,
-                                    index = index - World.CHUNK_SIZE_SQUARE
-                                });
-                    }
-
-                    if (((index >> (World.LOG_CHUNK_SIZE * 2)) & World.CHUNK_MASK) != World.CHUNK_MASK)
-                    {
-                        int light = chunk.lights.GetLightInt(index + World.CHUNK_SIZE_SQUARE);
-                        bool enqueue = false;
-
-                        if (GetRedLight(light) + 2u <= GetRedLight(lightLevel))
-                        {
-                            enqueue = true;
-                            chunk.lights.SetLight(index + World.CHUNK_SIZE_SQUARE, SetRedLight(ref light, GetRedLight(lightLevel) - 1u));
-                        }
-
-                        if (GetBlueLight(light) + 2u <= GetBlueLight(lightLevel))
-                        {
-                            chunk.lights.SetLight(index + World.CHUNK_SIZE_SQUARE, SetBlueLight(ref light, GetBlueLight(lightLevel) - 1u));
-                            enqueue = true;
-                        }
-
-                        if (GetGreenLight(light) + 2u <= GetGreenLight(lightLevel))
-                        {
-                            enqueue = true;
-                            chunk.lights.SetLight(index + World.CHUNK_SIZE_SQUARE, SetGreenLight(ref light, GetGreenLight(lightLevel) - 1u));
-                        }
-
-
-                        if (enqueue)
-                            if (chunk[index + World.CHUNK_SIZE_SQUARE] == 0)
-                                lightNodes.Enqueue(new LightNode()
-                                {
-                                    chunk = chunk,
-                                    index = index + World.CHUNK_SIZE_SQUARE
-                                });
-                    }
+                    
                 }
             }
         }

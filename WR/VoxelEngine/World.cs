@@ -37,7 +37,7 @@ namespace Aginar.VoxelEngine
             }
 
              _chunks[new Vector3i()][1, 12, 5] = 4;
-             _chunks[new Vector3i()][10, 12, 30] = 4;
+             _chunks[new Vector3i()][10, 12, 5] = 4;
              //_chunks[new Vector3i()][4, 12, 0] = 5;
              //_chunks[new Vector3i()][8, 12, 4] = 5;
 
