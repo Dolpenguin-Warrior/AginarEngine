@@ -101,10 +101,14 @@ namespace Aginar.VoxelEngine
                         y = (uint)(i >> World.LOG_CHUNK_SIZE) & World.CHUNK_MASK;
                         z = (uint)(i >> (World.LOG_CHUNK_SIZE * 2)) & World.CHUNK_MASK;
 
-                        Vector3i lights = chunk.lights.GetLight(i);
+                        Vector3i lights;
                         //
                         if (x == World.CHUNK_MASK || blocks.GetBlock(i + 1) == 0)
                         {
+                            if (x == World.CHUNK_MASK)
+                                lights = new Vector3i();
+                            else
+                                lights = chunk.lights.GetLight(i + 1);
                             // BlockType (16 bits), Normal (3 bits), Rotation (4 bits), UV ()
                             vertices[vertexCount + 0].BlockType = (uint)current | (0u << 16) | (0u << 19) | (0u << 23);
                             vertices[vertexCount + 0].BlockData =
@@ -141,6 +145,10 @@ namespace Aginar.VoxelEngine
 
                         if (x == 0 || blocks.GetBlock(i - 1) == 0)
                         {
+                            if (x == 0)
+                                lights = new Vector3i();
+                            else
+                                lights = chunk.lights.GetLight(i - 1);
                             vertices[vertexCount + 0].BlockType = (uint)current | (1u << 16) | (0u << 19) | (1u << 23);
                             vertices[vertexCount + 0].BlockData =
                                 ((Face_Data[4].x + x) | ((Face_Data[4].y + y) << 6) | ((Face_Data[4].z + z) << 12) // Position
@@ -175,6 +183,11 @@ namespace Aginar.VoxelEngine
 
                         if (z == World.CHUNK_MASK || blocks.GetBlock(i + World.CHUNK_SIZE_SQUARE) == 0)
                         {
+                            if (z == World.CHUNK_MASK)
+                                lights = new Vector3i();
+                            else
+                                lights = chunk.lights.GetLight(i + World.CHUNK_SIZE_SQUARE);
+
                             vertices[vertexCount + 0].BlockType = (uint)current | (2u << 16) | (0u << 19) | (1u << 23);
                             vertices[vertexCount + 0].BlockData =
                                 ((Face_Data[8].x + x) | ((Face_Data[8].y + y) << 6) | ((Face_Data[8].z + z) << 12) // Position
@@ -211,6 +224,11 @@ namespace Aginar.VoxelEngine
 
                         if (z == 0 || blocks.GetBlock(i - World.CHUNK_SIZE_SQUARE) == 0) // West
                         {
+                            if (z == 0)
+                                lights = new Vector3i();
+                            else
+                                lights = chunk.lights.GetLight(i - World.CHUNK_SIZE_SQUARE);
+
                             vertices[vertexCount + 0].BlockType = (uint)current | (3u << 16) | (0u << 19) | (0u << 23);
                             vertices[vertexCount + 0].BlockData =
                                 ((Face_Data[12].x + x) | ((Face_Data[12].y + y) << 6) | ((Face_Data[12].z + z) << 12) // Position
@@ -245,6 +263,10 @@ namespace Aginar.VoxelEngine
 
                         if (y == World.CHUNK_MASK || blocks.GetBlock(i + World.CHUNK_SIZE) == 0)
                         {
+                            if (y == World.CHUNK_MASK)
+                                lights = new Vector3i();
+                            else
+                                lights = chunk.lights.GetLight(i + World.CHUNK_SIZE);
                             vertices[vertexCount + 0].BlockType = (uint)current | (4u << 16) | (0u << 19) | (0u << 23);
                             vertices[vertexCount + 0].BlockData =
                                 ((Face_Data[16].x + x) | ((Face_Data[16].y + y) << 6) | ((Face_Data[16].z + z) << 12) // Position
@@ -279,6 +301,11 @@ namespace Aginar.VoxelEngine
 
                         if (y == 0 || blocks.GetBlock(i - World.CHUNK_SIZE) == 0)
                         {
+                            if (y == 0)
+                                lights = new Vector3i();
+                            else
+                                lights = chunk.lights.GetLight(i - World.CHUNK_SIZE);
+
                             vertices[vertexCount + 0].BlockType = (uint)current | (5u << 16) | (0u << 19) | (0u << 23);
                             vertices[vertexCount + 0].BlockData =
                                 ((Face_Data[20].x + x) | ((Face_Data[20].y + y) << 6) | ((Face_Data[20].z + z) << 12) // Position

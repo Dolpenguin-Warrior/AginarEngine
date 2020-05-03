@@ -27,9 +27,9 @@ namespace Aginar.VoxelEngine.ChunkData
                 );
         }
 
-        public int GetLightInt(int index)
+        public uint GetLightUInt(int index)
         {
-            return (int)bitBuffer.GetBits(index * INDEX_SIZE, INDEX_SIZE).Data;
+            return bitBuffer.GetBits(index * INDEX_SIZE, INDEX_SIZE).Data;
                 
         }
 

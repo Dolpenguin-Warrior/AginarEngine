@@ -38,7 +38,7 @@ namespace Aginar.VoxelEngine
                 index = index & (World.CHUNK_SIZE_CUBED - 1);
                 blocks.SetBlock(index, value);
                 lights.SetLight(index, ((uint)MathF.Round(World.blocks[value].Light.Z) << 8) | ((uint)MathF.Round(World.blocks[value].Light.Y) << 4) | ((uint)MathF.Round(World.blocks[value].Light.X)));
-                Lighting.LightStorage.SetLight(index, this);
+                Lighting.LightStorage.PropogateLight(index, this);
             }
         }
 
@@ -54,7 +54,7 @@ namespace Aginar.VoxelEngine
                 int index = World.Vector3IntToIndex(x, y, z) & (World.CHUNK_SIZE_CUBED - 1);
                 blocks.SetBlock(index, value);
                 lights.SetLight(index, ((uint)MathF.Round(World.blocks[value].Light.Z) << 8) | ((uint)MathF.Round(World.blocks[value].Light.Y) << 4) | ((uint)MathF.Round(World.blocks[value].Light.X)));
-                Lighting.LightStorage.SetLight(index, this);
+                Lighting.LightStorage.PropogateLight(index, this);
             }
         }
     }
