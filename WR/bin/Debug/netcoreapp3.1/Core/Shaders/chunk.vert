@@ -2,6 +2,7 @@
 
 layout(location = 0) in uvec2 aPosition;
 
+
 out vec2 texCoord;
 flat out vec4 lighting;
 

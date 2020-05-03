@@ -343,7 +343,7 @@ namespace Aginar.VoxelEngine
 
 #if _DEBUG_CHUNKS
                 generationTimer.Stop();
-                Debug.Log($"Chunk Meshing Speed: {generationTimer.Elapsed.TotalMilliseconds}"));
+                Debug.Log($"Chunk Meshing Speed: {generationTimer.Elapsed.TotalMilliseconds}");
 #endif // _DEBUG_CHUNKS
 
                 mesh.SetData(vertices, indices);
