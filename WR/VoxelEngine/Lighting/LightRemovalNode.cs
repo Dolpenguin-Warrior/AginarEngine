@@ -8,6 +8,6 @@ namespace Aginar.VoxelEngine.Lighting
     {
         public Chunk chunk;
         public int index;
-        public int value;
+        public uint value;
     }
 }

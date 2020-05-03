@@ -16,7 +16,7 @@ namespace Aginar.VoxelEngine
 
         public Dictionary<Vector3i, Chunk> _chunks = new Dictionary<Vector3i, Chunk>();
 
-        public static readonly BlockType[] blocks = new BlockType[] { new Air(), new Grass(), new Stone(), new Dirt(), new Lamp(), new PurpleLamp() };
+        public static readonly BlockType[] blocks = new BlockType[] { new Air(), new Grass(), new Stone(), new Dirt(), new Lamp(), new PurpleLamp(), new BlueLamp(), new GreenLamp(), };
 
         public World()
         {
@@ -36,12 +36,10 @@ namespace Aginar.VoxelEngine
                 }
             }
 
-             //_chunks[new Vector3i()][1, 12, 5] = 4;
-             //_chunks[new Vector3i()][10, 12, 5] = 4;
-             _chunks[new Vector3i()][4, 12, 6] = 5;
-             _chunks[new Vector3i()][8, 12, 4] = 5;
-
-
+            _chunks[new Vector3i()][16, 12, 16] = 5;
+            _chunks[new Vector3i()][16, 10, 12] = 6;
+            _chunks[new Vector3i()][10, 13, 10] = 4;
+            _chunks[new Vector3i()][20, 13, 20] = 7;
         }
 
         public BlockType this[int x, int y, int z]

@@ -36,9 +36,19 @@ namespace Aginar.VoxelEngine
             set
             {
                 index = index & (World.CHUNK_SIZE_CUBED - 1);
+                if (World.blocks[value].Light != Vector3.Zero)
+                {
+                    // Destroy lighting
+
+                    // Add new light
+                    lights.SetLight(index, ((uint)MathF.Round(World.blocks[value].Light.Z) << 8) | ((uint)MathF.Round(World.blocks[value].Light.Y) << 4) | ((uint)MathF.Round(World.blocks[value].Light.X)));
+                    Lighting.LightStorage.PropogateLight(index, this);
+                }
+                else
+                {
+                    
+                }
                 blocks.SetBlock(index, value);
-                lights.SetLight(index, ((uint)MathF.Round(World.blocks[value].Light.Z) << 8) | ((uint)MathF.Round(World.blocks[value].Light.Y) << 4) | ((uint)MathF.Round(World.blocks[value].Light.X)));
-                Lighting.LightStorage.PropogateLight(index, this);
             }
         }
 
