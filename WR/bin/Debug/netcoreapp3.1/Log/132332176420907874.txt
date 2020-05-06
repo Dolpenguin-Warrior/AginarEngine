@@ -1,0 +1,6 @@
+Lighting Speed: 3.9446
+Lighting Speed: 0.8802
+Lighting Speed: 1.0181
+Lighting Speed: 1.9077
+Chunk Meshing Speed: 6.9331
+ShipChunk Meshing Speed: 4.5926

@@ -1,0 +1,8 @@
+A:\Documents\Desktop\OpenGL\AginarEngine\Common\bin\Release\netcoreapp3.1\Common.deps.json
+A:\Documents\Desktop\OpenGL\AginarEngine\Common\bin\Release\netcoreapp3.1\Common.dll
+A:\Documents\Desktop\OpenGL\AginarEngine\Common\bin\Release\netcoreapp3.1\Common.pdb
+A:\Documents\Desktop\OpenGL\AginarEngine\Common\obj\Release\netcoreapp3.1\Common.csproj.CoreCompileInputs.cache
+A:\Documents\Desktop\OpenGL\AginarEngine\Common\obj\Release\netcoreapp3.1\Common.AssemblyInfoInputs.cache
+A:\Documents\Desktop\OpenGL\AginarEngine\Common\obj\Release\netcoreapp3.1\Common.AssemblyInfo.cs
+A:\Documents\Desktop\OpenGL\AginarEngine\Common\obj\Release\netcoreapp3.1\Common.dll
+A:\Documents\Desktop\OpenGL\AginarEngine\Common\obj\Release\netcoreapp3.1\Common.pdb

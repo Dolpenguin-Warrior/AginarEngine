@@ -1,0 +1,4 @@
+Lighting Speed: 3.5452
+Lighting Speed: 0.9794
+Lighting Speed: 1.1133
+Lighting Speed: 1.9563

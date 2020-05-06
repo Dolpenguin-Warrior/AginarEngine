@@ -1802,6 +1802,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "Common": "1.0.0",
           "LiteNetLib": "0.8.3.1",
           "OpenTK": "4.0.0-pre7",
           "System.Drawing.Common": "5.0.0-preview.2.20160.6"
@@ -1811,6 +1812,16 @@
         },
         "runtime": {
           "bin/placeholder/Aginar.dll": {}
+        }
+      },
+      "Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Common.dll": {}
         }
       }
     }
@@ -6047,6 +6058,11 @@
       "type": "project",
       "path": "../WR/Aginar.csproj",
       "msbuildProject": "../WR/Aginar.csproj"
+    },
+    "Common/1.0.0": {
+      "type": "project",
+      "path": "../Common/Common.csproj",
+      "msbuildProject": "../Common/Common.csproj"
     }
   },
   "projectFileDependencyGroups": {

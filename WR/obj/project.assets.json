@@ -173,6 +173,16 @@
             "rid": "win"
           }
         }
+      },
+      "Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Common.dll": {}
+        }
       }
     }
   },
@@ -417,10 +427,16 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "Common/1.0.0": {
+      "type": "project",
+      "path": "../Common/Common.csproj",
+      "msbuildProject": "../Common/Common.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "Common >= 1.0.0",
       "LiteNetLib >= 0.8.3.1",
       "OpenTK >= 4.0.0-pre7",
       "System.Drawing.Common >= 5.0.0-preview.2.20160.6"
@@ -456,7 +472,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "A:\\Documents\\Desktop\\OpenGL\\AginarEngine\\Common\\Common.csproj": {
+              "projectPath": "A:\\Documents\\Desktop\\OpenGL\\AginarEngine\\Common\\Common.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

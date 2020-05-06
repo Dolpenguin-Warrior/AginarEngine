@@ -1,0 +1,5 @@
+Lighting Speed: 3.3754
+Lighting Speed: 0.2423
+Lighting Speed: 0.4896
+Lighting Speed: 0.4975
+Average chunk Meshing Speed: 1.5126456442249014

@@ -1,4 +1,5 @@
-﻿using OpenToolkit.Graphics.OpenGL4;
+﻿using Aginar.Core.Meshes;
+using OpenToolkit.Graphics.OpenGL4;
 using OpenToolkit.Mathematics;
 using System;
 
@@ -14,7 +15,9 @@ namespace Aginar.Core
 
         private int _triangleCount;
 
-        public Mesh()
+        private int totalVertexSize = 0;
+
+        public Mesh(VertexAttribute[] vertexAttributes)
         {
             _vertexBufferObject = GL.GenBuffer();
             _elementBufferObject = GL.GenBuffer();
@@ -28,13 +31,28 @@ namespace Aginar.Core
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
 
-            var vertexLocation = _shader.GetAttribLocation("aPosition");
-            GL.EnableVertexAttribArray(vertexLocation);
-            GL.VertexAttribPointer(vertexLocation, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
+            int stride = 0;
+            if (vertexAttributes.Length > 1)
+            {
+                foreach (var item in vertexAttributes)
+                {
+                    stride += item.byteSize;
+                }
+            }
+            int offset = 0;
+            for (int i = 0; i < vertexAttributes.Length; i++)
+            {
+                int vertexLocation = _shader.GetAttribLocation(vertexAttributes[i].attributeName);
+                GL.EnableVertexAttribArray(vertexLocation);
 
-            var texCoordLocation = _shader.GetAttribLocation("aTexCoord");
-            GL.EnableVertexAttribArray(texCoordLocation);
-            GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
+                if (vertexAttributes[i].isInteger)
+                    GL.VertexAttribIPointer(vertexLocation, vertexAttributes[i].size, VertexAttribIntegerType.UnsignedInt, stride, new IntPtr(offset));
+                else
+                    GL.VertexAttribPointer(vertexLocation, vertexAttributes[i].size, vertexAttributes[i].type, vertexAttributes[i].isNormalised, stride, new IntPtr(offset));
+
+                offset += vertexAttributes[i].byteSize;
+                totalVertexSize += vertexAttributes[i].byteSize;
+            }
         }
 
         public void SetTexture(string texturePath)
@@ -63,10 +81,10 @@ namespace Aginar.Core
             }
         }
 
-        public void SetData(Vertex[] vertices, uint[] indices)
+        public void SetData<T>(T[] vertices, uint[] indices) where T : unmanaged
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * 5 * sizeof(float), vertices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * totalVertexSize, vertices, BufferUsageHint.StaticDraw);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(uint), indices, BufferUsageHint.StaticDraw);

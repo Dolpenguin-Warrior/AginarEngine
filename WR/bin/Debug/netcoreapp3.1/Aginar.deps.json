@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v3.1": {
       "Aginar/1.0.0": {
         "dependencies": {
+          "Common": "1.0.0",
           "LiteNetLib": "0.8.3.1",
           "OpenTK": "4.0.0-pre7",
           "System.Drawing.Common": "5.0.0-preview.2.20160.6"
@@ -173,6 +174,11 @@
             "fileVersion": "5.0.20.16006"
           }
         }
+      },
+      "Common/1.0.0": {
+        "runtime": {
+          "Common.dll": {}
+        }
       }
     }
   },
@@ -272,6 +278,11 @@
       "sha512": "sha512-Q7jh7RzlsHX2CjcF2yYmd/j5zeDgeGk4mOlifEsu7UW9Vwklf5JuNcVSNi2g2+4viPI1Q3p4JpIsB0bsYNKcOg==",
       "path": "system.drawing.common/5.0.0-preview.2.20160.6",
       "hashPath": "system.drawing.common.5.0.0-preview.2.20160.6.nupkg.sha512"
+    },
+    "Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

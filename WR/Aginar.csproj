@@ -41,4 +41,8 @@
     <Folder Include="VoxelEngine\Physics\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+  </ItemGroup>
+
 </Project>
